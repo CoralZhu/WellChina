@@ -80,6 +80,35 @@
     "startAIPrep": "Prepare with AI",
     "viewJourney": "View My Journey"
   },
+  "tabs": {
+    "home": "Home",
+    "search": "Search",
+    "trip": "Journey",
+    "profile": "Profile"
+  },
+  "search": {
+    "sectionTitle": "Search by Symptom",
+    "allInstitutions": "All Institutions",
+    "resultCount": "{{count}} results",
+    "emptyTitle": "No matching institutions",
+    "emptyBody": "Try another keyword",
+    "filters": {
+      "all": "All",
+      "western": "Western Medicine",
+      "tcm": "TCM",
+      "wellness": "Wellness"
+    },
+    "symptoms": {
+      "kneePain": "Knee Pain",
+      "cardiology": "Cardiology",
+      "tcm": "TCM",
+      "insomnia": "Insomnia",
+      "cancer": "Cancer Screening",
+      "chronicPain": "Chronic Pain",
+      "wellness": "Wellness",
+      "liver": "Liver"
+    }
+  },
   "services": {
     "tcm": "TCM Wellness",
     "western": "Western Medicine",
@@ -101,7 +130,8 @@
     "level3Hospital": "Grade A Hospital",
     "jciCertified": "JCI Certified",
     "yearsExperience": "yrs experience",
-    "prepareWithAI": "Prepare with AI"
+    "prepareWithAI": "Prepare with AI",
+    "similarInstitutions": "Similar Institutions"
   },
   "care": {
     "title": "AI Care Preparation",

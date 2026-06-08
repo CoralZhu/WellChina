@@ -80,6 +80,35 @@
     "startAIPrep": "Prepare with AI",
     "viewJourney": "View My Journey"
   },
+  "tabs": {
+    "home": "Главная",
+    "search": "Поиск",
+    "trip": "Поездка",
+    "profile": "Профиль"
+  },
+  "search": {
+    "sectionTitle": "Поиск по симптому",
+    "allInstitutions": "Все учреждения",
+    "resultCount": "{{count}} результатов",
+    "emptyTitle": "Подходящих учреждений нет",
+    "emptyBody": "Попробуйте другой запрос",
+    "filters": {
+      "all": "Все",
+      "western": "Западная медицина",
+      "tcm": "ТКМ",
+      "wellness": "Оздоровление"
+    },
+    "symptoms": {
+      "kneePain": "Боль в колене",
+      "cardiology": "Кардиология",
+      "tcm": "ТКМ",
+      "insomnia": "Бессонница",
+      "cancer": "Скрининг рака",
+      "chronicPain": "Хроническая боль",
+      "wellness": "Оздоровление",
+      "liver": "Печень"
+    }
+  },
   "services": {
     "tcm": "Китайская медицина",
     "western": "Западная медицина",
@@ -101,7 +130,8 @@
     "level3Hospital": "Больница высшей категории",
     "jciCertified": "Сертификат JCI",
     "yearsExperience": "лет опыта",
-    "prepareWithAI": "Подготовиться с ИИ"
+    "prepareWithAI": "Подготовиться с ИИ",
+    "similarInstitutions": "Похожие учреждения"
   },
   "care": {
     "title": "ИИ-подготовка к лечению",

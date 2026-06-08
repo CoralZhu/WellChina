@@ -80,6 +80,35 @@
     "startAIPrep": "AI 就医准备",
     "viewJourney": "查看我的旅程"
   },
+  "tabs": {
+    "home": "首页",
+    "search": "搜索",
+    "trip": "行程",
+    "profile": "我的"
+  },
+  "search": {
+    "sectionTitle": "按症状搜索",
+    "allInstitutions": "全部机构",
+    "resultCount": "{{count}} 个结果",
+    "emptyTitle": "暂无相关机构",
+    "emptyBody": "请尝试其他关键词",
+    "filters": {
+      "all": "全部",
+      "western": "西医",
+      "tcm": "中医",
+      "wellness": "康养"
+    },
+    "symptoms": {
+      "kneePain": "膝关节痛",
+      "cardiology": "心脏问题",
+      "tcm": "中医调理",
+      "insomnia": "失眠",
+      "cancer": "癌症筛查",
+      "chronicPain": "慢性疼痛",
+      "wellness": "减压养生",
+      "liver": "肝脏问题"
+    }
+  },
   "services": {
     "tcm": "中医康养",
     "western": "西医诊疗",
@@ -101,7 +130,8 @@
     "level3Hospital": "三甲医院",
     "jciCertified": "JCI 认证",
     "yearsExperience": "年经验",
-    "prepareWithAI": "AI 就医准备"
+    "prepareWithAI": "AI 就医准备",
+    "similarInstitutions": "相似机构"
   },
   "care": {
     "title": "AI 就医准备",

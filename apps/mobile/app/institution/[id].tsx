@@ -31,6 +31,15 @@ export default function InstitutionDetail() {
   const name = inst.name[lang] || inst.name['en'];
   const city = inst.city[lang] || inst.city['en'];
   const description = inst.description[lang as keyof typeof inst.description] || inst.description['en'];
+  const matchingInstitutions = INSTITUTIONS.filter((item) => (
+    item.id !== inst.id && (item.city.en === inst.city.en || item.type === inst.type)
+  ));
+  const fillInstitutions = INSTITUTIONS.filter((item) => (
+    item.id !== inst.id && !matchingInstitutions.some((match) => match.id === item.id)
+  ));
+  const similarInstitutions = INSTITUTIONS.length > 1
+    ? [...matchingInstitutions, ...fillInstitutions].slice(0, 3)
+    : [];
 
   const handleShare = async () => {
     await Share.share({
@@ -233,6 +242,42 @@ export default function InstitutionDetail() {
           )}
         </View>
 
+        {similarInstitutions.length > 0 && (
+          <View style={styles.similarSection}>
+            <Text style={styles.sectionTitle}>{t('institution.similarInstitutions')}</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.similarRow}
+            >
+              {similarInstitutions.map((item) => {
+                const similarName = item.name[lang] || item.name.en;
+                const similarCity = item.city[lang] || item.city.en;
+
+                return (
+                  <TouchableOpacity
+                    key={item.id}
+                    style={styles.similarCard}
+                    onPress={() => router.push(`/institution/${item.id}`)}
+                    activeOpacity={0.9}
+                  >
+                    <Image source={{ uri: item.image }} style={styles.similarImage} resizeMode="cover" />
+                    <View style={styles.similarBody}>
+                      <Text style={styles.similarName} numberOfLines={2}>{similarName}</Text>
+                      <View style={styles.similarMeta}>
+                        <Ionicons name="location-outline" size={13} color={Colors.textSecondary} />
+                        <Text style={styles.similarCity} numberOfLines={1}>{similarCity}</Text>
+                        <Ionicons name="star" size={13} color={Colors.gold} style={{ marginLeft: Spacing.sm }} />
+                        <Text style={styles.similarRating}>{item.rating}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>
+          </View>
+        )}
+
         <View style={{ height: 120 }} />
       </ScrollView>
 
@@ -378,6 +423,46 @@ const styles = StyleSheet.create({
   infoBody: { flex: 1 },
   infoTitle: { fontSize: FontSize.md, fontWeight: '700', color: Colors.textPrimary, marginBottom: 4 },
   infoText: { fontSize: FontSize.sm, color: Colors.textSecondary, lineHeight: 22 },
+  similarSection: {
+    paddingHorizontal: Spacing.lg,
+    paddingBottom: Spacing.lg,
+  },
+  similarRow: {
+    gap: Spacing.md,
+    paddingRight: Spacing.lg,
+  },
+  similarCard: {
+    width: 280,
+    backgroundColor: Colors.bgCard,
+    borderRadius: Radius.lg,
+    overflow: 'hidden',
+    ...Shadow.card,
+  },
+  similarImage: { width: '100%', height: 132 },
+  similarBody: { padding: Spacing.md },
+  similarName: {
+    fontSize: FontSize.md,
+    fontWeight: '800',
+    color: Colors.textPrimary,
+    marginBottom: Spacing.sm,
+    lineHeight: 22,
+  },
+  similarMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  similarCity: {
+    fontSize: FontSize.sm,
+    color: Colors.textSecondary,
+    marginLeft: 3,
+    maxWidth: 140,
+  },
+  similarRating: {
+    fontSize: FontSize.sm,
+    color: Colors.textPrimary,
+    fontWeight: '800',
+    marginLeft: 3,
+  },
   bookBar: { backgroundColor: Colors.bgCard, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border },
   prepareAiButton: {
     flexDirection: 'row',

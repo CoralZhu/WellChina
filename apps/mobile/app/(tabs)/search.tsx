@@ -11,21 +11,21 @@ import { Colors, FontSize, Radius, Spacing } from '../../constants/theme';
 import { useAppStore } from '../../store/appStore';
 
 const SYMPTOM_CHIPS = [
-  { label: '膝关节痛 / Knee Pain', query: 'knee pain' },
-  { label: '心脏问题 / Cardiology', query: 'heart' },
-  { label: '中医调理 / TCM', query: 'tcm' },
-  { label: '失眠 / Insomnia', query: 'insomnia' },
-  { label: '癌症 / Cancer', query: 'cancer' },
-  { label: '慢性疼痛 / Chronic Pain', query: 'chronic pain' },
-  { label: '减压养生 / Wellness', query: 'wellness' },
-  { label: '肝脏问题 / Liver', query: 'liver' },
+  { labelKey: 'search.symptoms.kneePain', query: 'knee pain' },
+  { labelKey: 'search.symptoms.cardiology', query: 'heart' },
+  { labelKey: 'search.symptoms.tcm', query: 'tcm' },
+  { labelKey: 'search.symptoms.insomnia', query: 'insomnia' },
+  { labelKey: 'search.symptoms.cancer', query: 'cancer' },
+  { labelKey: 'search.symptoms.chronicPain', query: 'chronic pain' },
+  { labelKey: 'search.symptoms.wellness', query: 'wellness' },
+  { labelKey: 'search.symptoms.liver', query: 'liver' },
 ];
 
 const TYPE_FILTERS = [
-  { key: 'all', label: '全部 / All' },
-  { key: 'western', label: '西医' },
-  { key: 'tcm', label: '中医' },
-  { key: 'wellness', label: '康养' },
+  { key: 'all', labelKey: 'search.filters.all' },
+  { key: 'western', labelKey: 'search.filters.western' },
+  { key: 'tcm', labelKey: 'search.filters.tcm' },
+  { key: 'wellness', labelKey: 'search.filters.wellness' },
 ];
 
 export default function SearchScreen() {
@@ -81,7 +81,7 @@ export default function SearchScreen() {
               style={[styles.pill, typeFilter === f.key && styles.pillActive]}
               onPress={() => setTypeFilter(f.key)}
             >
-              <Text style={[styles.pillText, typeFilter === f.key && styles.pillTextActive]}>{f.label}</Text>
+              <Text style={[styles.pillText, typeFilter === f.key && styles.pillTextActive]}>{t(f.labelKey)}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -89,7 +89,7 @@ export default function SearchScreen() {
         {/* Symptom Quick-search */}
         {!query && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t('home.searchSymptom')}</Text>
+            <Text style={styles.sectionTitle}>{t('search.sectionTitle')}</Text>
             <View style={styles.chipWrap}>
               {SYMPTOM_CHIPS.map((chip) => (
                 <TouchableOpacity
@@ -97,7 +97,7 @@ export default function SearchScreen() {
                   style={styles.chip}
                   onPress={() => setQuery(chip.query)}
                 >
-                  <Text style={styles.chipText}>{chip.label}</Text>
+                  <Text style={styles.chipText}>{t(chip.labelKey)}</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -108,21 +108,21 @@ export default function SearchScreen() {
         <View style={styles.section}>
           {query || typeFilter !== 'all' ? (
             <>
-              <Text style={styles.resultCount}>{filtered.length} 个结果</Text>
+              <Text style={styles.resultCount}>{t('search.resultCount', { count: filtered.length })}</Text>
               {filtered.map((item) => (
                 <InstitutionCard key={item.id} item={item} />
               ))}
               {filtered.length === 0 && (
                 <View style={styles.empty}>
                   <Ionicons name="search-outline" size={48} color={Colors.border} />
-                  <Text style={styles.emptyText}>暂无相关机构</Text>
-                  <Text style={styles.emptySubtext}>请尝试其他关键词</Text>
+                  <Text style={styles.emptyText}>{t('search.emptyTitle')}</Text>
+                  <Text style={styles.emptySubtext}>{t('search.emptyBody')}</Text>
                 </View>
               )}
             </>
           ) : (
             <>
-              <Text style={styles.sectionTitle}>全部机构</Text>
+              <Text style={styles.sectionTitle}>{t('search.allInstitutions')}</Text>
               {INSTITUTIONS.map((item) => (
                 <InstitutionCard key={item.id} item={item} />
               ))}

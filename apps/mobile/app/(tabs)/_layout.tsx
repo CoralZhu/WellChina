@@ -24,7 +24,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: t('home.greeting'),
-          tabBarLabel: '首页',
+          tabBarLabel: t('tabs.home'),
           tabBarIcon: ({ color, size }) => <Ionicons name="home-outline" size={size} color={color} />,
         }}
       />
@@ -32,7 +32,7 @@ export default function TabLayout() {
         name="search"
         options={{
           title: t('common.search'),
-          tabBarLabel: '搜索',
+          tabBarLabel: t('tabs.search'),
           tabBarIcon: ({ color, size }) => <Ionicons name="search-outline" size={size} color={color} />,
         }}
       />
@@ -40,7 +40,7 @@ export default function TabLayout() {
         name="trip"
         options={{
           title: t('trip.title'),
-          tabBarLabel: '行程',
+          tabBarLabel: t('tabs.trip'),
           tabBarIcon: ({ color, size }) => <Ionicons name="calendar-outline" size={size} color={color} />,
         }}
       />
@@ -48,7 +48,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: t('profile.title'),
-          tabBarLabel: '我的',
+          tabBarLabel: t('tabs.profile'),
           tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />,
         }}
       />
