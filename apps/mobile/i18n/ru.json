@@ -35,6 +35,21 @@
     "simpleModeLabel": "Включить простой режим",
     "simpleModeDescription": "Крупные кнопки, меньше опций, проще в использовании"
   },
+  "admin": {
+    "title": "Панель координатора",
+    "empty": "Пока нет заявок",
+    "loading": "Загрузка заявок...",
+    "bookingId": "ID заявки",
+    "contact": "Контакт"
+  },
+  "status": {
+    "pending_review": "Ожидает проверки",
+    "coordinator_reviewing": "На проверке",
+    "confirmed": "Подтверждено",
+    "in_progress": "В процессе",
+    "completed": "Завершено",
+    "cancelled": "Отменено"
+  },
   "onboarding": {
     "screen1": {
       "title": "Медицина в Китае без сложностей",
@@ -235,6 +250,14 @@
     "startAiPreparation": "Начать ИИ-подготовку",
     "statusPendingReview": "Ожидает проверки",
     "coordinatorWillReview": "Наш координатор скоро проверит ваш запрос.",
+    "subtitle": {
+      "pending_review": "Наш координатор скоро проверит ваш запрос",
+      "coordinator_reviewing": "Наш координатор проверяет ваш запрос",
+      "confirmed": "Ваша заявка подтверждена",
+      "in_progress": "Ваш путь лечения продолжается",
+      "completed": "Ваш путь лечения завершен",
+      "cancelled": "Эта заявка была отменена"
+    },
     "bookingSummary": "Сводка запроса",
     "institution": "Учреждение",
     "service": "Услуга",

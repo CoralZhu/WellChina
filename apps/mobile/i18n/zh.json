@@ -35,6 +35,21 @@
     "simpleModeLabel": "启用简洁模式",
     "simpleModeDescription": "更大的按钮，更少的选项，更容易使用"
   },
+  "admin": {
+    "title": "协调员管理台",
+    "empty": "暂无预约",
+    "loading": "正在加载预约...",
+    "bookingId": "预约编号",
+    "contact": "联系方式"
+  },
+  "status": {
+    "pending_review": "待审核",
+    "coordinator_reviewing": "审核中",
+    "confirmed": "已确认",
+    "in_progress": "进行中",
+    "completed": "已完成",
+    "cancelled": "已取消"
+  },
   "onboarding": {
     "screen1": {
       "title": "中国医疗，清晰易懂",
@@ -235,6 +250,14 @@
     "startAiPreparation": "开始 AI 就医准备",
     "statusPendingReview": "待审核",
     "coordinatorWillReview": "我们的协调员会尽快审核您的请求。",
+    "subtitle": {
+      "pending_review": "我们的协调员会尽快审核您的请求",
+      "coordinator_reviewing": "我们的协调员正在审核您的请求",
+      "confirmed": "您的预约已确认",
+      "in_progress": "您的就医旅程正在进行中",
+      "completed": "您的就医旅程已完成",
+      "cancelled": "此预约已取消"
+    },
     "bookingSummary": "预约摘要",
     "institution": "机构",
     "service": "服务",

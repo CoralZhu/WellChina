@@ -20,14 +20,23 @@ const SCREENS = [
   {
     key: 'screen1',
     icon: 'earth' as const,
+    backgroundColor: '#FDF2F2',
+    iconBackgroundColor: '#F8DADA',
+    iconColor: '#B85450',
   },
   {
     key: 'screen2',
     icon: 'sparkles' as const,
+    backgroundColor: '#FDFBEE',
+    iconBackgroundColor: '#F7EDC8',
+    iconColor: '#C9954A',
   },
   {
     key: 'screen3',
     icon: 'checkmark-circle' as const,
+    backgroundColor: '#EAFAF1',
+    iconBackgroundColor: '#CFEFDC',
+    iconColor: '#3D8B6A',
   },
 ];
 
@@ -72,9 +81,12 @@ export default function OnboardingScreen() {
         scrollEventThrottle={16}
       >
         {SCREENS.map((screen) => (
-          <View key={screen.key} style={[styles.screen, { width }]}>
-            <View style={styles.iconWrap}>
-              <Ionicons name={screen.icon} size={100} color={Colors.primary} />
+          <View
+            key={screen.key}
+            style={[styles.screen, { width, backgroundColor: screen.backgroundColor }]}
+          >
+            <View style={[styles.iconWrap, { backgroundColor: screen.iconBackgroundColor }]}>
+              <Ionicons name={screen.icon} size={100} color={screen.iconColor} />
             </View>
             <Text style={styles.screenTitle}>{t(`onboarding.${screen.key}.title`)}</Text>
             <Text style={styles.screenBody}>{t(`onboarding.${screen.key}.body`)}</Text>
@@ -134,7 +146,6 @@ const styles = StyleSheet.create({
     borderRadius: 78,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FDF2F2',
     marginBottom: Spacing.xl,
   },
   screenTitle: {

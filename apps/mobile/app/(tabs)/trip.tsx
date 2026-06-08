@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -14,16 +14,87 @@ import { Button } from '../../components/ui/Button';
 import { Colors, Radius, Shadow, Spacing } from '../../constants/theme';
 import { INSTITUTIONS } from '../../data/mock';
 import { useFontSize } from '../../hooks/useFontSize';
+import { isSupabaseEnabled, supabase } from '../../lib/supabase';
 import { useAppStore } from '../../store/appStore';
+import type { BookingRequestStatus } from '../../types/workflow';
+
+const STATUS_STYLE: Record<BookingRequestStatus, {
+  backgroundColor: string;
+  color: string;
+  icon: React.ComponentProps<typeof Ionicons>['name'];
+}> = {
+  pending_review: {
+    backgroundColor: '#FDF2F2',
+    color: Colors.primary,
+    icon: 'time-outline',
+  },
+  coordinator_reviewing: {
+    backgroundColor: '#FFF4E5',
+    color: '#C9954A',
+    icon: 'eye-outline',
+  },
+  confirmed: {
+    backgroundColor: '#E5F0FF',
+    color: '#4A7CC9',
+    icon: 'checkmark-circle-outline',
+  },
+  in_progress: {
+    backgroundColor: '#E5F5EC',
+    color: '#5BA678',
+    icon: 'walk-outline',
+  },
+  completed: {
+    backgroundColor: '#DCEBE0',
+    color: '#3D8B6A',
+    icon: 'checkmark-done-circle',
+  },
+  cancelled: {
+    backgroundColor: '#FBE5E5',
+    color: '#C95450',
+    icon: 'close-circle-outline',
+  },
+};
 
 export default function TripScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const FontSize = useFontSize();
   const styles = useMemo(() => createStyles(FontSize), [FontSize]);
-  const { currentBooking, language } = useAppStore();
+  const { currentBooking, language, updateBookingStatus } = useAppStore();
   const lang = language;
   const [checkedPreparation, setCheckedPreparation] = useState<Record<number, boolean>>({});
+
+  useEffect(() => {
+    if (!currentBooking || !isSupabaseEnabled() || !supabase) return;
+
+    const supabaseClient = supabase;
+    let cancelled = false;
+
+    const syncBookingStatus = async () => {
+      try {
+        const { data, error } = await supabaseClient
+          .from('bookings')
+          .select('status')
+          .eq('id', currentBooking.id)
+          .single();
+
+        if (cancelled || error || !data?.status) return;
+
+        const nextStatus = data.status as BookingRequestStatus;
+        if (nextStatus !== currentBooking.status) {
+          updateBookingStatus(nextStatus);
+        }
+      } catch (error) {
+        console.error('Failed to sync booking status from Supabase:', error);
+      }
+    };
+
+    void syncBookingStatus();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentBooking, updateBookingStatus]);
 
   const institution = INSTITUTIONS.find((item) => item.id === currentBooking?.institutionId);
   const service = institution?.services.find((item) => item.id === currentBooking?.serviceId);
@@ -79,6 +150,8 @@ export default function TripScreen() {
     );
   }
 
+  const statusStyle = STATUS_STYLE[currentBooking.status];
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
@@ -102,13 +175,19 @@ export default function TripScreen() {
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.statusBanner}>
+        <View style={[styles.statusBanner, { backgroundColor: statusStyle.backgroundColor, borderColor: statusStyle.backgroundColor }]}>
           <View style={styles.statusIcon}>
-            <Ionicons name="time-outline" size={24} color={Colors.primary} />
+            <Ionicons
+              name={statusStyle.icon}
+              size={24}
+              color={statusStyle.color}
+            />
           </View>
           <View style={styles.statusTextWrap}>
-            <Text style={styles.statusBadge}>{t('trip.statusPendingReview')}</Text>
-            <Text style={styles.statusSubtitle}>{t('trip.coordinatorWillReview')}</Text>
+            <Text style={[styles.statusBadge, { color: statusStyle.color }]}>
+              {t(`status.${currentBooking.status}`)}
+            </Text>
+            <Text style={styles.statusSubtitle}>{t(`trip.subtitle.${currentBooking.status}`)}</Text>
           </View>
         </View>
 
@@ -253,11 +332,9 @@ const createStyles = (FontSize: ReturnType<typeof useFontSize>) => StyleSheet.cr
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.md,
-    backgroundColor: '#FDF2F2',
     borderRadius: Radius.lg,
     padding: Spacing.md,
     borderWidth: 1,
-    borderColor: Colors.primaryLight,
   },
   statusIcon: {
     width: 48,

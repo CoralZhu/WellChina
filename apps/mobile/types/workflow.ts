@@ -38,7 +38,13 @@ export type CarePreparationResult = {
 };
 
 /** Status values for the MVP booking request lifecycle. */
-export type BookingRequestStatus = 'pending_review' | 'confirmed_mock' | 'completed_mock';
+export type BookingRequestStatus =
+  | 'pending_review'
+  | 'coordinator_reviewing'
+  | 'confirmed'
+  | 'in_progress'
+  | 'completed'
+  | 'cancelled';
 
 /** Booking request record created after the user chooses care details and submits contact information. */
 export type BookingRequest = {

@@ -35,6 +35,21 @@
     "simpleModeLabel": "Enable Simple Mode",
     "simpleModeDescription": "Larger buttons, fewer options, easier to use"
   },
+  "admin": {
+    "title": "Coordinator Dashboard",
+    "empty": "No bookings yet",
+    "loading": "Loading bookings...",
+    "bookingId": "Booking ID",
+    "contact": "Contact"
+  },
+  "status": {
+    "pending_review": "Pending Review",
+    "coordinator_reviewing": "Under Review",
+    "confirmed": "Confirmed",
+    "in_progress": "In Progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
   "onboarding": {
     "screen1": {
       "title": "Healthcare in China, made clear",
@@ -235,6 +250,14 @@
     "startAiPreparation": "Start AI Preparation",
     "statusPendingReview": "Pending Review",
     "coordinatorWillReview": "Our coordinator will review your request shortly.",
+    "subtitle": {
+      "pending_review": "Our coordinator will review your request shortly",
+      "coordinator_reviewing": "Our coordinator is reviewing your request",
+      "confirmed": "Your booking is confirmed",
+      "in_progress": "Your care journey is in progress",
+      "completed": "Your care journey is complete",
+      "cancelled": "This booking has been cancelled"
+    },
     "bookingSummary": "Booking Summary",
     "institution": "Institution",
     "service": "Service",
