@@ -1,0 +1,293 @@
+{
+  "common": {
+    "next": "继续",
+    "skip": "跳过",
+    "getStarted": "开始体验",
+    "search": "搜索城市、医院、症状...",
+    "sos": "SOS 紧急",
+    "back": "返回",
+    "confirm": "确认",
+    "cancel": "取消",
+    "book": "立即预订",
+    "learnMore": "了解更多",
+    "viewAll": "查看全部",
+    "loading": "加载中...",
+    "send": "发送",
+    "share": "分享",
+    "save": "保存"
+  },
+  "language": {
+    "title": "选择您的语言",
+    "subtitle": "请选择您偏好的语言以继续",
+    "zh": "中文",
+    "en": "English",
+    "ru": "Русский"
+  },
+  "settings": {
+    "title": "设置",
+    "accessibility": "无障碍",
+    "fontSize": "字体大小",
+    "fontSizeSmall": "小",
+    "fontSizeMedium": "中",
+    "fontSizeLarge": "大",
+    "previewText": "您的文字将显示为这个大小",
+    "simpleMode": "简洁模式",
+    "simpleModeLabel": "启用简洁模式",
+    "simpleModeDescription": "更大的按钮，更少的选项，更容易使用"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "中国医疗，清晰易懂",
+      "body": "WellChina 帮助国际患者用自己的语言安心了解和使用中国医院服务。"
+    },
+    "screen2": {
+      "title": "AI 智能就医准备",
+      "body": "回答几个问题，即可获得个性化就医计划，包括准备清单、医生问题和出行建议。"
+    },
+    "screen3": {
+      "title": "从预约到复诊跟进",
+      "body": "追踪您的旅程，准备每次就诊，并获取可分享给家人的双语摘要。"
+    },
+    "skip": "跳过",
+    "next": "下一步",
+    "getStarted": "开始使用"
+  },
+  "home": {
+    "greeting": "您好",
+    "aiAssistant": "AI 健康管家",
+    "aiSubtitle": "有任何问题，随时问我",
+    "categories": "服务分类",
+    "destinations": "热门目的地",
+    "hotRecommend": "热门推荐",
+    "viewMap": "查看地图",
+    "searchSymptom": "按症状找机构",
+    "searchInstitutions": "查找医院",
+    "startAIPrep": "AI 就医准备",
+    "viewJourney": "查看我的旅程"
+  },
+  "services": {
+    "tcm": "中医康养",
+    "western": "西医诊疗",
+    "wellness": "康养旅居",
+    "companion": "陪诊翻译"
+  },
+  "institution": {
+    "about": "机构简介",
+    "doctors": "医生团队",
+    "certifications": "资质认证",
+    "services": "服务项目",
+    "reviews": "用户评价",
+    "mustRead": "来华须知",
+    "priceFrom": "价格从",
+    "bookNow": "立即预订",
+    "share": "分享给家人",
+    "exportQuote": "导出报价单",
+    "contactUs": "咨询客服",
+    "level3Hospital": "三甲医院",
+    "jciCertified": "JCI 认证",
+    "yearsExperience": "年经验",
+    "prepareWithAI": "AI 就医准备"
+  },
+  "care": {
+    "title": "AI 就医准备",
+    "step1": {
+      "title": "您为什么考虑来中国就医？"
+    },
+    "step2": {
+      "title": "您正在考虑哪个城市？"
+    },
+    "step3": {
+      "title": "您计划什么时候出行？"
+    },
+    "step4": {
+      "title": "您是否有病历或检查报告？"
+    },
+    "step5": {
+      "title": "描述您的情况（选填）",
+      "placeholder": "请补充说明您的身体情况、症状或就医目标..."
+    },
+    "step6": {
+      "title": "确认您的回答"
+    },
+    "symptom": {
+      "orthopedicsRehabilitation": "骨科与康复",
+      "traditionalChineseMedicine": "中医调理",
+      "cancerScreening": "肿瘤筛查",
+      "cardiology": "心血管",
+      "generalWellness": "综合康养",
+      "other": "其他"
+    },
+    "city": {
+      "beijing": "北京",
+      "shanghai": "上海",
+      "guangzhou": "广州",
+      "sanya": "三亚",
+      "notSureYet": "暂不确定"
+    },
+    "travel": {
+      "withinOneMonth": "1个月内",
+      "oneToThreeMonths": "1–3个月",
+      "threeToSixMonths": "3–6个月",
+      "justExploring": "暂时了解"
+    },
+    "records": {
+      "yes": "有，我有报告",
+      "no": "暂无报告"
+    },
+    "review": {
+      "symptomCategory": "就医方向",
+      "city": "城市",
+      "travelWindow": "出行时间",
+      "hasMedicalReports": "病历报告",
+      "symptomDescription": "补充说明",
+      "notSelected": "未选择",
+      "noDescription": "未提供"
+    },
+    "actions": {
+      "back": "返回",
+      "next": "下一步",
+      "generatePlan": "生成我的就医计划"
+    }
+  },
+  "careResult": {
+    "title": "您的就医计划",
+    "situationSummary": "您的情况",
+    "preparationChecklist": "准备清单",
+    "questionsForDoctor": "想问医生的问题",
+    "travelChecklist": "出行清单",
+    "editAnswers": "修改答案",
+    "continueToBooking": "继续预约",
+    "errorTitle": "未找到就医准备",
+    "errorBody": "请先完成 AI 就医准备。",
+    "backToCarePrep": "开始就医准备"
+  },
+  "booking": {
+    "title": "预约请求",
+    "package": "选择套餐",
+    "date": "选择日期",
+    "guests": "人数",
+    "priceBreakdown": "费用明细",
+    "medicalFee": "医疗服务费",
+    "accommodationFee": "住宿费",
+    "companionFee": "陪诊费",
+    "total": "合计",
+    "refundPolicy": "退款政策",
+    "guarantee": "平台担保",
+    "payNow": "立即支付",
+    "depositOnly": "仅付定金",
+    "noHiddenFees": "无隐藏费用",
+    "crossSellTitle": "为您的行程添加",
+    "crossSellSubtitle": "选择增值服务，让旅程更顺畅",
+    "visa": "签证办理",
+    "visaDesc": "专业签证代办，材料审核保障",
+    "flight": "机票预订",
+    "flightDesc": "优选航班，支持多种支付方式",
+    "hotel": "酒店安排",
+    "hotelDesc": "医院附近优选酒店",
+    "transfer": "接送机",
+    "transferDesc": "专业司机，身份验证保障",
+    "addService": "添加此服务",
+    "orderConfirmed": "预订成功！",
+    "orderNumber": "订单号",
+    "aiPreparationAttached": "已附加 AI 就医准备",
+    "aiPreparationHelps": "您的就医准备内容已附加到本次预约请求中。",
+    "noAiPreparation": "尚未完成 AI 就医准备。建议您先完成准备。",
+    "startAiPreparation": "开始 AI 就医准备",
+    "contactDetails": "联系方式",
+    "contactName": "您的姓名",
+    "contactNamePlaceholder": "完整姓名",
+    "contactMethod": "联系方式",
+    "contactMethodPlaceholder": "例如 WhatsApp +1234567890",
+    "travelWindow": "出行时间",
+    "travelWindowPlaceholder": "例如 2026年7月",
+    "symptomsSummary": "情况摘要",
+    "symptomsSummaryPlaceholder": "请描述您的情况和就医目标",
+    "preferredLanguage": "首选语言",
+    "submitRequest": "提交预约请求",
+    "errorRequired": "此项为必填",
+    "serviceNotFound": "未找到服务"
+  },
+  "chat": {
+    "title": "AI 健康管家",
+    "placeholder": "请输入您的问题...",
+    "greeting": "您好！我是您的 AI 健康管家，可以帮您解答关于中国医疗和康养的任何问题。",
+    "faqTitle": "常见问题",
+    "faq1": "如何办理来华医疗签证？",
+    "faq2": "能携带处方药入境吗？",
+    "faq3": "医疗费用能否报销？",
+    "faq4": "治疗期间需要家人陪同吗？"
+  },
+  "trip": {
+    "title": "我的旅程",
+    "today": "今日安排",
+    "upcoming": "即将到来",
+    "noTrip": "暂无行程",
+    "noTripSub": "完成预订后，您的行程将显示在这里",
+    "pickupDriver": "接机司机信息",
+    "driverVerified": "已实名认证",
+    "hospital": "就诊医院",
+    "checkIn": "酒店入住",
+    "reminder": "健康提醒",
+    "bookingRequest": "预约请求",
+    "emptyTitle": "暂无旅程",
+    "emptyBody": "您可以先寻找机构，或完成 AI 就医准备。",
+    "browseInstitutions": "浏览机构",
+    "startAiPreparation": "开始 AI 就医准备",
+    "statusPendingReview": "待审核",
+    "coordinatorWillReview": "我们的协调员会尽快审核您的请求。",
+    "bookingSummary": "预约摘要",
+    "institution": "机构",
+    "service": "服务",
+    "selectedPackage": "套餐",
+    "travelWindow": "出行时间",
+    "preferredLanguage": "语言",
+    "createdAt": "提交时间",
+    "unknownInstitution": "未知机构",
+    "unknownService": "未知服务",
+    "notProvided": "未提供",
+    "preparationChecklist": "准备清单",
+    "questionsForDoctor": "想问医生的问题",
+    "nextStep": "推荐下一步"
+  },
+  "visitSummary": {
+    "title": "就诊总结",
+    "inputSubtitle": "输入医生告诉您的内容，我们会生成结构化总结。",
+    "inputPlaceholder": "例如：医生建议进行6周康复训练...",
+    "generateButton": "生成总结",
+    "tabPatient": "患者版",
+    "tabChinese": "中文版",
+    "tabFamily": "家属版",
+    "doctorAdviceSummary": "医生建议",
+    "medicationNotes": "用药说明",
+    "recoveryNotes": "康复建议",
+    "followUpRecommendation": "复诊建议",
+    "done": "完成",
+    "noBookingTitle": "未找到预约",
+    "noBookingBody": "请先完成预约请求。",
+    "backToTrip": "返回旅程"
+  },
+  "profile": {
+    "title": "我的",
+    "login": "登录 / 注册",
+    "loginDesc": "登录后享受完整服务",
+    "orders": "我的订单",
+    "health": "健康档案",
+    "records": "就诊记录",
+    "reviews": "我的评价",
+    "referral": "推荐有礼",
+    "referralDesc": "每推荐1位朋友下单，获 $200 抵扣券",
+    "vip": "VIP 会员",
+    "settings": "设置",
+    "language": "语言设置",
+    "logout": "退出登录"
+  },
+  "sos": {
+    "title": "紧急求助",
+    "subtitle": "24小时在线，随时为您服务",
+    "callNow": "立即呼叫客服",
+    "location": "发送我的位置",
+    "translate": "紧急翻译",
+    "hospital": "最近医院",
+    "embassy": "使馆联系"
+  }
+}

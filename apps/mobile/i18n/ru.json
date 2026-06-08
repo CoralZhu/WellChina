@@ -1,0 +1,293 @@
+{
+  "common": {
+    "next": "Далее",
+    "skip": "Пропустить",
+    "getStarted": "Начать",
+    "search": "Поиск города, больницы, симптомов...",
+    "sos": "SOS Экстренная",
+    "back": "Назад",
+    "confirm": "Подтвердить",
+    "cancel": "Отмена",
+    "book": "Забронировать",
+    "learnMore": "Подробнее",
+    "viewAll": "Смотреть все",
+    "loading": "Загрузка...",
+    "send": "Отправить",
+    "share": "Поделиться",
+    "save": "Сохранить"
+  },
+  "language": {
+    "title": "Выберите язык",
+    "subtitle": "Выберите предпочтительный язык для продолжения",
+    "zh": "中文",
+    "en": "English",
+    "ru": "Русский"
+  },
+  "settings": {
+    "title": "Настройки",
+    "accessibility": "Доступность",
+    "fontSize": "Размер шрифта",
+    "fontSizeSmall": "Малый",
+    "fontSizeMedium": "Средний",
+    "fontSizeLarge": "Крупный",
+    "previewText": "Так будет выглядеть ваш текст",
+    "simpleMode": "Простой режим",
+    "simpleModeLabel": "Включить простой режим",
+    "simpleModeDescription": "Крупные кнопки, меньше опций, проще в использовании"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Медицина в Китае без сложностей",
+      "body": "WellChina помогает иностранным пациентам уверенно ориентироваться в китайских больницах на их языке."
+    },
+    "screen2": {
+      "title": "Подготовка с помощью ИИ",
+      "body": "Ответьте на несколько вопросов и получите персональный план: чеклист, вопросы врачу и советы для поездки."
+    },
+    "screen3": {
+      "title": "От записи до наблюдения",
+      "body": "Отслеживайте поездку, готовьтесь к визитам и получайте двуязычные итоги для семьи."
+    },
+    "skip": "Пропустить",
+    "next": "Далее",
+    "getStarted": "Начать"
+  },
+  "home": {
+    "greeting": "Доброе утро",
+    "aiAssistant": "ИИ Помощник",
+    "aiSubtitle": "Задайте любой вопрос в любое время",
+    "categories": "Услуги",
+    "destinations": "Популярные направления",
+    "hotRecommend": "Топ выбор",
+    "viewMap": "Посмотреть карту",
+    "searchSymptom": "Поиск по симптому",
+    "searchInstitutions": "Find a Hospital",
+    "startAIPrep": "Prepare with AI",
+    "viewJourney": "View My Journey"
+  },
+  "services": {
+    "tcm": "Китайская медицина",
+    "western": "Западная медицина",
+    "wellness": "Оздоровительный отдых",
+    "companion": "Сопровождение"
+  },
+  "institution": {
+    "about": "О нас",
+    "doctors": "Врачебная команда",
+    "certifications": "Сертификаты",
+    "services": "Услуги",
+    "reviews": "Отзывы",
+    "mustRead": "Перед приездом",
+    "priceFrom": "От",
+    "bookNow": "Забронировать",
+    "share": "Поделиться с семьёй",
+    "exportQuote": "Экспорт котировки",
+    "contactUs": "Связаться с нами",
+    "level3Hospital": "Больница высшей категории",
+    "jciCertified": "Сертификат JCI",
+    "yearsExperience": "лет опыта",
+    "prepareWithAI": "Подготовиться с ИИ"
+  },
+  "care": {
+    "title": "ИИ-подготовка к лечению",
+    "step1": {
+      "title": "Зачем вы рассматриваете поездку в Китай?"
+    },
+    "step2": {
+      "title": "Какой город вы рассматриваете?"
+    },
+    "step3": {
+      "title": "Когда вы планируете поездку?"
+    },
+    "step4": {
+      "title": "У вас есть медицинские отчеты или документы?"
+    },
+    "step5": {
+      "title": "Опишите вашу ситуацию (необязательно)",
+      "placeholder": "Добавьте детали о вашем состоянии..."
+    },
+    "step6": {
+      "title": "Проверьте ваши ответы"
+    },
+    "symptom": {
+      "orthopedicsRehabilitation": "Ортопедия и реабилитация",
+      "traditionalChineseMedicine": "Традиционная китайская медицина",
+      "cancerScreening": "Онкологический скрининг",
+      "cardiology": "Кардиология",
+      "generalWellness": "Общее оздоровление",
+      "other": "Другое"
+    },
+    "city": {
+      "beijing": "Пекин",
+      "shanghai": "Шанхай",
+      "guangzhou": "Гуанчжоу",
+      "sanya": "Санья",
+      "notSureYet": "Пока не уверен(а)"
+    },
+    "travel": {
+      "withinOneMonth": "В течение 1 месяца",
+      "oneToThreeMonths": "1–3 месяца",
+      "threeToSixMonths": "3–6 месяцев",
+      "justExploring": "Пока изучаю варианты"
+    },
+    "records": {
+      "yes": "Да, у меня есть документы",
+      "no": "Документов пока нет"
+    },
+    "review": {
+      "symptomCategory": "Состояние",
+      "city": "Город",
+      "travelWindow": "Период поездки",
+      "hasMedicalReports": "Медицинские документы",
+      "symptomDescription": "Дополнительные детали",
+      "notSelected": "Не выбрано",
+      "noDescription": "Не указано"
+    },
+    "actions": {
+      "back": "Назад",
+      "next": "Далее",
+      "generatePlan": "Создать мой план лечения"
+    }
+  },
+  "careResult": {
+    "title": "Ваш план лечения",
+    "situationSummary": "Ваша ситуация",
+    "preparationChecklist": "Список подготовки",
+    "questionsForDoctor": "Вопросы врачу",
+    "travelChecklist": "Список для поездки",
+    "editAnswers": "Изменить ответы",
+    "continueToBooking": "Продолжить к заявке",
+    "errorTitle": "Подготовка не найдена",
+    "errorBody": "Сначала завершите ИИ-подготовку к лечению.",
+    "backToCarePrep": "Начать подготовку"
+  },
+  "booking": {
+    "title": "Запрос на помощь",
+    "package": "Выбрать пакет",
+    "date": "Выбрать дату",
+    "guests": "Гости",
+    "priceBreakdown": "Разбивка цен",
+    "medicalFee": "Медицинские услуги",
+    "accommodationFee": "Проживание",
+    "companionFee": "Медицинское сопровождение",
+    "total": "Итого",
+    "refundPolicy": "Политика отмены",
+    "guarantee": "Гарантия платформы",
+    "payNow": "Оплатить сейчас",
+    "depositOnly": "Оплатить только депозит",
+    "noHiddenFees": "Без скрытых платежей",
+    "crossSellTitle": "Завершите своё путешествие",
+    "crossSellSubtitle": "Добавьте услуги для комфортного путешествия",
+    "visa": "Оформление визы",
+    "visaDesc": "Профессиональная обработка визы с проверкой документов",
+    "flight": "Бронирование авиабилетов",
+    "flightDesc": "Подобранные рейсы с гибкой оплатой",
+    "hotel": "Размещение в отеле",
+    "hotelDesc": "Отобранные отели рядом с клиникой",
+    "transfer": "Трансфер из аэропорта",
+    "transferDesc": "Проверенные водители с подтверждённой личностью",
+    "addService": "Добавить",
+    "orderConfirmed": "Бронирование подтверждено!",
+    "orderNumber": "Заказ №",
+    "aiPreparationAttached": "ИИ-подготовка прикреплена",
+    "aiPreparationHelps": "Ваша подготовка прикреплена к этому запросу.",
+    "noAiPreparation": "ИИ-подготовка еще не выполнена. Рекомендуем сначала пройти ее.",
+    "startAiPreparation": "Начать ИИ-подготовку",
+    "contactDetails": "Контактные данные",
+    "contactName": "Ваше имя",
+    "contactNamePlaceholder": "Полное имя",
+    "contactMethod": "Способ связи",
+    "contactMethodPlaceholder": "например WhatsApp +1234567890",
+    "travelWindow": "Период поездки",
+    "travelWindowPlaceholder": "например июль 2026",
+    "symptomsSummary": "Краткое описание ситуации",
+    "symptomsSummaryPlaceholder": "Опишите ваше состояние и цели",
+    "preferredLanguage": "Предпочитаемый язык",
+    "submitRequest": "Отправить запрос",
+    "errorRequired": "Это поле обязательно",
+    "serviceNotFound": "Услуга не найдена"
+  },
+  "chat": {
+    "title": "ИИ Помощник по здоровью",
+    "placeholder": "Введите ваш вопрос...",
+    "greeting": "Здравствуйте! Я ваш ИИ Помощник по здоровью. Я могу ответить на любые вопросы о здравоохранении и оздоровлении в Китае.",
+    "faqTitle": "Часто задаваемые вопросы",
+    "faq1": "Как получить медицинскую визу в Китай?",
+    "faq2": "Можно ли везти рецептурные лекарства?",
+    "faq3": "Покроет ли страховка расходы на лечение?",
+    "faq4": "Нужен ли сопровождающий?"
+  },
+  "trip": {
+    "title": "Мой путь",
+    "today": "Сегодня",
+    "upcoming": "Предстоящее",
+    "noTrip": "Нет активной поездки",
+    "noTripSub": "Ваш маршрут появится здесь после бронирования",
+    "pickupDriver": "Ваш водитель",
+    "driverVerified": "Личность подтверждена",
+    "hospital": "Визит в больницу",
+    "checkIn": "Заезд в отель",
+    "reminder": "Напоминание о здоровье",
+    "bookingRequest": "Запрос на бронирование",
+    "emptyTitle": "Пока нет поездки",
+    "emptyBody": "Начните с выбора учреждения или ИИ-подготовки.",
+    "browseInstitutions": "Смотреть учреждения",
+    "startAiPreparation": "Начать ИИ-подготовку",
+    "statusPendingReview": "Ожидает проверки",
+    "coordinatorWillReview": "Наш координатор скоро проверит ваш запрос.",
+    "bookingSummary": "Сводка запроса",
+    "institution": "Учреждение",
+    "service": "Услуга",
+    "selectedPackage": "Пакет",
+    "travelWindow": "Период поездки",
+    "preferredLanguage": "Язык",
+    "createdAt": "Отправлено",
+    "unknownInstitution": "Неизвестное учреждение",
+    "unknownService": "Неизвестная услуга",
+    "notProvided": "Не указано",
+    "preparationChecklist": "Список подготовки",
+    "questionsForDoctor": "Вопросы врачу",
+    "nextStep": "Рекомендуемый следующий шаг"
+  },
+  "visitSummary": {
+    "title": "Итоги визита",
+    "inputSubtitle": "Введите, что сказал врач, и мы создадим структурированное резюме.",
+    "inputPlaceholder": "например: врач рекомендовал 6 недель реабилитации...",
+    "generateButton": "Создать резюме",
+    "tabPatient": "Пациент",
+    "tabChinese": "Китайский",
+    "tabFamily": "Семья",
+    "doctorAdviceSummary": "Рекомендации врача",
+    "medicationNotes": "Заметки о лекарствах",
+    "recoveryNotes": "Рекомендации по восстановлению",
+    "followUpRecommendation": "Повторный прием",
+    "done": "Готово",
+    "noBookingTitle": "Бронирование не найдено",
+    "noBookingBody": "Сначала завершите запрос на бронирование.",
+    "backToTrip": "Вернуться к пути"
+  },
+  "profile": {
+    "title": "Профиль",
+    "login": "Войти / Зарегистрироваться",
+    "loginDesc": "Войдите для доступа ко всем функциям",
+    "orders": "Мои заказы",
+    "health": "Медицинские записи",
+    "records": "История посещений",
+    "reviews": "Мои отзывы",
+    "referral": "Пригласить и заработать",
+    "referralDesc": "Пригласите друга и получите скидку $200 на следующее бронирование",
+    "vip": "VIP Участник",
+    "settings": "Настройки",
+    "language": "Язык",
+    "logout": "Выйти"
+  },
+  "sos": {
+    "title": "Экстренная помощь",
+    "subtitle": "Доступно круглосуточно, мы всегда рядом",
+    "callNow": "Позвонить в службу поддержки",
+    "location": "Поделиться моим местоположением",
+    "translate": "Экстренный перевод",
+    "hospital": "Ближайшая больница",
+    "embassy": "Контакт посольства"
+  }
+}

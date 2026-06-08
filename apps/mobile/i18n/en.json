@@ -1,0 +1,293 @@
+{
+  "common": {
+    "next": "Next",
+    "skip": "Skip",
+    "getStarted": "Get Started",
+    "search": "Search city, hospital, symptoms...",
+    "sos": "SOS Emergency",
+    "back": "Back",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "book": "Book Now",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "loading": "Loading...",
+    "send": "Send",
+    "share": "Share",
+    "save": "Save"
+  },
+  "language": {
+    "title": "Choose Your Language",
+    "subtitle": "Please select your preferred language to continue",
+    "zh": "中文",
+    "en": "English",
+    "ru": "Русский"
+  },
+  "settings": {
+    "title": "Settings",
+    "accessibility": "Accessibility",
+    "fontSize": "Font Size",
+    "fontSizeSmall": "Small",
+    "fontSizeMedium": "Medium",
+    "fontSizeLarge": "Large",
+    "previewText": "This is how your text will look",
+    "simpleMode": "Simple Mode",
+    "simpleModeLabel": "Enable Simple Mode",
+    "simpleModeDescription": "Larger buttons, fewer options, easier to use"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Healthcare in China, made clear",
+      "body": "WellChina helps international patients navigate Chinese hospitals with confidence, in their own language."
+    },
+    "screen2": {
+      "title": "AI-powered preparation",
+      "body": "Answer a few questions and get a personalized care plan with checklist, doctor questions, and travel tips."
+    },
+    "screen3": {
+      "title": "From booking to follow-up",
+      "body": "Track your journey, prepare for visits, and get bilingual summaries to share with your family."
+    },
+    "skip": "Skip",
+    "next": "Next",
+    "getStarted": "Get Started"
+  },
+  "home": {
+    "greeting": "Good morning",
+    "aiAssistant": "AI Health Assistant",
+    "aiSubtitle": "Ask me anything, anytime",
+    "categories": "Services",
+    "destinations": "Popular Destinations",
+    "hotRecommend": "Top Picks",
+    "viewMap": "View Map",
+    "searchSymptom": "Search by Symptom",
+    "searchInstitutions": "Find a Hospital",
+    "startAIPrep": "Prepare with AI",
+    "viewJourney": "View My Journey"
+  },
+  "services": {
+    "tcm": "TCM Wellness",
+    "western": "Western Medicine",
+    "wellness": "Wellness Stay",
+    "companion": "Medical Companion"
+  },
+  "institution": {
+    "about": "About",
+    "doctors": "Medical Team",
+    "certifications": "Certifications",
+    "services": "Services",
+    "reviews": "Reviews",
+    "mustRead": "Before You Come",
+    "priceFrom": "From",
+    "bookNow": "Book Now",
+    "share": "Share with Family",
+    "exportQuote": "Export Quote",
+    "contactUs": "Contact Us",
+    "level3Hospital": "Grade A Hospital",
+    "jciCertified": "JCI Certified",
+    "yearsExperience": "yrs experience",
+    "prepareWithAI": "Prepare with AI"
+  },
+  "care": {
+    "title": "AI Care Preparation",
+    "step1": {
+      "title": "What brings you to China for care?"
+    },
+    "step2": {
+      "title": "Which city are you considering?"
+    },
+    "step3": {
+      "title": "When are you planning to travel?"
+    },
+    "step4": {
+      "title": "Do you have medical reports or records?"
+    },
+    "step5": {
+      "title": "Describe your situation (optional)",
+      "placeholder": "Share any additional details about your condition..."
+    },
+    "step6": {
+      "title": "Review Your Answers"
+    },
+    "symptom": {
+      "orthopedicsRehabilitation": "Orthopedics & Rehabilitation",
+      "traditionalChineseMedicine": "Traditional Chinese Medicine",
+      "cancerScreening": "Cancer Screening",
+      "cardiology": "Cardiology",
+      "generalWellness": "General Wellness",
+      "other": "Other"
+    },
+    "city": {
+      "beijing": "Beijing",
+      "shanghai": "Shanghai",
+      "guangzhou": "Guangzhou",
+      "sanya": "Sanya",
+      "notSureYet": "Not sure yet"
+    },
+    "travel": {
+      "withinOneMonth": "Within 1 month",
+      "oneToThreeMonths": "1–3 months",
+      "threeToSixMonths": "3–6 months",
+      "justExploring": "Just exploring"
+    },
+    "records": {
+      "yes": "Yes, I have reports",
+      "no": "No reports yet"
+    },
+    "review": {
+      "symptomCategory": "Condition",
+      "city": "City",
+      "travelWindow": "Travel Window",
+      "hasMedicalReports": "Medical Reports",
+      "symptomDescription": "Additional Details",
+      "notSelected": "Not selected",
+      "noDescription": "None provided"
+    },
+    "actions": {
+      "back": "Back",
+      "next": "Next",
+      "generatePlan": "Generate My Care Plan"
+    }
+  },
+  "careResult": {
+    "title": "Your Care Plan",
+    "situationSummary": "Your Situation",
+    "preparationChecklist": "Preparation Checklist",
+    "questionsForDoctor": "Questions for Your Doctor",
+    "travelChecklist": "Travel Checklist",
+    "editAnswers": "Edit Answers",
+    "continueToBooking": "Continue to Booking",
+    "errorTitle": "No preparation found",
+    "errorBody": "Please complete the AI care preparation first.",
+    "backToCarePrep": "Start Care Preparation"
+  },
+  "booking": {
+    "title": "Care Request",
+    "package": "Select Package",
+    "date": "Select Date",
+    "guests": "Guests",
+    "priceBreakdown": "Price Breakdown",
+    "medicalFee": "Medical Services",
+    "accommodationFee": "Accommodation",
+    "companionFee": "Medical Companion",
+    "total": "Total",
+    "refundPolicy": "Cancellation Policy",
+    "guarantee": "Platform Guarantee",
+    "payNow": "Pay Now",
+    "depositOnly": "Pay Deposit Only",
+    "noHiddenFees": "No Hidden Fees",
+    "crossSellTitle": "Complete Your Journey",
+    "crossSellSubtitle": "Add these services for a seamless experience",
+    "visa": "Visa Assistance",
+    "visaDesc": "Expert visa processing with document review",
+    "flight": "Flight Booking",
+    "flightDesc": "Curated flights with flexible payment",
+    "hotel": "Hotel Arrangement",
+    "hotelDesc": "Hand-picked hotels near your clinic",
+    "transfer": "Airport Transfer",
+    "transferDesc": "Verified drivers, identity confirmed",
+    "addService": "Add This",
+    "orderConfirmed": "Booking Confirmed!",
+    "orderNumber": "Order #",
+    "aiPreparationAttached": "AI Preparation Attached",
+    "aiPreparationHelps": "Your preparation has been attached to this request.",
+    "noAiPreparation": "No AI preparation yet. We recommend completing it first.",
+    "startAiPreparation": "Start AI Preparation",
+    "contactDetails": "Contact Details",
+    "contactName": "Your Name",
+    "contactNamePlaceholder": "Full name",
+    "contactMethod": "Contact Method",
+    "contactMethodPlaceholder": "e.g. WhatsApp +1234567890",
+    "travelWindow": "Travel Window",
+    "travelWindowPlaceholder": "e.g. July 2026",
+    "symptomsSummary": "Situation Summary",
+    "symptomsSummaryPlaceholder": "Describe your condition and goals",
+    "preferredLanguage": "Preferred Language",
+    "submitRequest": "Submit Care Request",
+    "errorRequired": "This field is required",
+    "serviceNotFound": "Service not found"
+  },
+  "chat": {
+    "title": "AI Health Assistant",
+    "placeholder": "Type your question here...",
+    "greeting": "Hello! I'm your AI Health Assistant. I can answer any questions about healthcare and wellness in China.",
+    "faqTitle": "Common Questions",
+    "faq1": "How do I apply for a medical visa to China?",
+    "faq2": "Can I bring prescription medication?",
+    "faq3": "Will my insurance cover treatment costs?",
+    "faq4": "Do I need a family member to accompany me?"
+  },
+  "trip": {
+    "title": "My Journey",
+    "today": "Today",
+    "upcoming": "Upcoming",
+    "noTrip": "No Active Trip",
+    "noTripSub": "Your itinerary will appear here after booking",
+    "pickupDriver": "Your Driver",
+    "driverVerified": "Identity Verified",
+    "hospital": "Hospital Visit",
+    "checkIn": "Hotel Check-in",
+    "reminder": "Health Reminder",
+    "bookingRequest": "Booking Request",
+    "emptyTitle": "No journey yet",
+    "emptyBody": "Start by finding an institution or completing AI preparation.",
+    "browseInstitutions": "Browse Institutions",
+    "startAiPreparation": "Start AI Preparation",
+    "statusPendingReview": "Pending Review",
+    "coordinatorWillReview": "Our coordinator will review your request shortly.",
+    "bookingSummary": "Booking Summary",
+    "institution": "Institution",
+    "service": "Service",
+    "selectedPackage": "Package",
+    "travelWindow": "Travel Window",
+    "preferredLanguage": "Language",
+    "createdAt": "Submitted",
+    "unknownInstitution": "Unknown institution",
+    "unknownService": "Unknown service",
+    "notProvided": "Not provided",
+    "preparationChecklist": "Preparation Checklist",
+    "questionsForDoctor": "Questions for Doctor",
+    "nextStep": "Recommended Next Step"
+  },
+  "visitSummary": {
+    "title": "Visit Summary",
+    "inputSubtitle": "Enter what the doctor told you and we will generate a structured summary.",
+    "inputPlaceholder": "e.g. The doctor recommended 6 weeks of rehabilitation...",
+    "generateButton": "Generate Summary",
+    "tabPatient": "Patient",
+    "tabChinese": "Chinese",
+    "tabFamily": "Family",
+    "doctorAdviceSummary": "Doctor's Advice",
+    "medicationNotes": "Medication Notes",
+    "recoveryNotes": "Recovery Notes",
+    "followUpRecommendation": "Follow-up",
+    "done": "Done",
+    "noBookingTitle": "No booking found",
+    "noBookingBody": "Please complete a booking request first.",
+    "backToTrip": "Back to Journey"
+  },
+  "profile": {
+    "title": "Profile",
+    "login": "Sign In / Register",
+    "loginDesc": "Sign in to access all features",
+    "orders": "My Orders",
+    "health": "Health Records",
+    "records": "Visit History",
+    "reviews": "My Reviews",
+    "referral": "Refer & Earn",
+    "referralDesc": "Refer a friend and earn $200 off your next booking",
+    "vip": "VIP Member",
+    "settings": "Settings",
+    "language": "Language",
+    "logout": "Sign Out"
+  },
+  "sos": {
+    "title": "Emergency Help",
+    "subtitle": "Available 24/7, we're always here for you",
+    "callNow": "Call Support Now",
+    "location": "Share My Location",
+    "translate": "Emergency Translation",
+    "hospital": "Nearest Hospital",
+    "embassy": "Embassy Contact"
+  }
+}
