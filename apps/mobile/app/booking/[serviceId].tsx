@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -15,6 +15,7 @@ import { Button } from '../../components/ui/Button';
 import { Colors, Radius, Shadow, Spacing } from '../../constants/theme';
 import { INSTITUTIONS } from '../../data/mock';
 import { useFontSize } from '../../hooks/useFontSize';
+import { generateCarePreparation } from '../../lib/carePreparationGenerator';
 import { useAppStore } from '../../store/appStore';
 import type { BookingRequest } from '../../types/workflow';
 
@@ -39,18 +40,34 @@ export default function BookingScreen() {
   const styles = useMemo(() => createStyles(FontSize), [FontSize]);
   const {
     createBookingRequest,
+    currentCareInput,
     currentCareResult,
     language,
   } = useAppStore();
   const lang = language;
+  const localizedCareResult = useMemo(() => {
+    if (!currentCareResult) return null;
+    if (!currentCareInput || currentCareInput.preferredLanguage === language) return currentCareResult;
+
+    return generateCarePreparation({
+      ...currentCareInput,
+      preferredLanguage: language,
+    });
+  }, [currentCareInput, currentCareResult, language]);
 
   const [selectedPkg, setSelectedPkg] = useState('standard');
   const [contactName, setContactName] = useState('');
   const [contactMethod, setContactMethod] = useState('');
   const [travelWindow, setTravelWindow] = useState('');
-  const [symptomsSummary, setSymptomsSummary] = useState(currentCareResult?.situationSummary || '');
+  const [symptomsSummary, setSymptomsSummary] = useState(localizedCareResult?.situationSummary || '');
+  const [hasEditedSymptomsSummary, setHasEditedSymptomsSummary] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (hasEditedSymptomsSummary) return;
+    setSymptomsSummary(localizedCareResult?.situationSummary || '');
+  }, [hasEditedSymptomsSummary, localizedCareResult]);
 
   const inst = INSTITUTIONS.find((item) => item.services.some((service) => service.id === serviceId));
   const service = inst?.services.find((item) => item.id === serviceId);
@@ -109,7 +126,8 @@ export default function BookingScreen() {
         contactName: contactName.trim(),
         contactMethod: contactMethod.trim(),
         status: 'pending_review',
-        carePreparation: currentCareResult ?? undefined,
+        carePreparation: localizedCareResult ?? currentCareResult ?? undefined,
+        carePreparationInput: currentCareInput ?? undefined,
         createdAt: new Date().toISOString(),
       };
 
@@ -174,13 +192,13 @@ export default function BookingScreen() {
         </View>
 
         <View style={styles.section}>
-          {currentCareResult ? (
+          {localizedCareResult ? (
             <View style={styles.aiCard}>
               <View style={styles.aiHeader}>
                 <Ionicons name="sparkles-outline" size={19} color={Colors.primary} />
                 <Text style={styles.aiTitle}>{t('booking.aiPreparationAttached')}</Text>
               </View>
-              {currentCareResult.preparationChecklist.slice(0, 2).map((item) => (
+              {localizedCareResult.preparationChecklist.slice(0, 2).map((item) => (
                 <View key={item} style={styles.aiPreviewRow}>
                   <Ionicons name="checkmark-circle-outline" size={15} color={Colors.success} />
                   <Text style={styles.aiPreviewText}>{item}</Text>
@@ -237,7 +255,10 @@ export default function BookingScreen() {
           <TextInput
             style={[styles.textArea, errors.symptomsSummary && styles.inputError]}
             value={symptomsSummary}
-            onChangeText={setSymptomsSummary}
+            onChangeText={(value) => {
+              setHasEditedSymptomsSummary(true);
+              setSymptomsSummary(value);
+            }}
             placeholder={t('booking.symptomsSummaryPlaceholder')}
             placeholderTextColor={Colors.textMuted}
             multiline

@@ -32,6 +32,7 @@ export default function VisitSummaryScreen() {
 
   const [doctorNotes, setDoctorNotes] = useState('');
   const [activeTab, setActiveTab] = useState<SummaryTab>('patient');
+  const currentVisitSummary = visitSummary?.bookingId === currentBooking?.id ? visitSummary : null;
 
   const handleGenerate = () => {
     if (!currentBooking || !doctorNotes.trim()) return;
@@ -39,7 +40,7 @@ export default function VisitSummaryScreen() {
   };
 
   const familyLanguage = currentBooking?.preferredLanguage === 'ru' ? 'ru' : 'en';
-  const familySummary = visitSummary?.familyShareSummary[familyLanguage] || visitSummary?.familyShareSummary.en || '';
+  const familySummary = currentVisitSummary?.familyShareSummary[familyLanguage] || currentVisitSummary?.familyShareSummary.en || '';
 
   if (!currentBooking) {
     return (
@@ -68,7 +69,7 @@ export default function VisitSummaryScreen() {
         <View style={styles.headerSpacer} />
       </View>
 
-      {!visitSummary ? (
+      {!currentVisitSummary ? (
         <View style={styles.inputWrap}>
           <Text style={styles.title}>{t('visitSummary.title')}</Text>
           <Text style={styles.subtitle}>{t('visitSummary.inputSubtitle')}</Text>
@@ -115,26 +116,26 @@ export default function VisitSummaryScreen() {
             {activeTab === 'patient' && (
               <View style={styles.card}>
                 <Text style={styles.sectionTitle}>{t('visitSummary.doctorAdviceSummary')}</Text>
-                <Text style={styles.bodyText}>{visitSummary.doctorAdviceSummary}</Text>
+                <Text style={styles.bodyText}>{currentVisitSummary.doctorAdviceSummary}</Text>
 
-                {visitSummary.medicationNotes && (
+                {currentVisitSummary.medicationNotes && (
                   <>
                     <Text style={styles.sectionTitle}>{t('visitSummary.medicationNotes')}</Text>
-                    <Text style={styles.bodyText}>{visitSummary.medicationNotes}</Text>
+                    <Text style={styles.bodyText}>{currentVisitSummary.medicationNotes}</Text>
                   </>
                 )}
 
-                {visitSummary.recoveryNotes && (
+                {currentVisitSummary.recoveryNotes && (
                   <>
                     <Text style={styles.sectionTitle}>{t('visitSummary.recoveryNotes')}</Text>
-                    <Text style={styles.bodyText}>{visitSummary.recoveryNotes}</Text>
+                    <Text style={styles.bodyText}>{currentVisitSummary.recoveryNotes}</Text>
                   </>
                 )}
 
-                {visitSummary.followUpRecommendation && (
+                {currentVisitSummary.followUpRecommendation && (
                   <>
                     <Text style={styles.sectionTitle}>{t('visitSummary.followUpRecommendation')}</Text>
-                    <Text style={styles.bodyText}>{visitSummary.followUpRecommendation}</Text>
+                    <Text style={styles.bodyText}>{currentVisitSummary.followUpRecommendation}</Text>
                   </>
                 )}
               </View>
@@ -143,7 +144,7 @@ export default function VisitSummaryScreen() {
             {activeTab === 'chinese' && (
               <View style={styles.card}>
                 <Text style={styles.sectionTitle}>{t('visitSummary.tabChinese')}</Text>
-                <Text style={styles.bodyText}>{visitSummary.familyShareSummary.zh}</Text>
+                <Text style={styles.bodyText}>{currentVisitSummary.familyShareSummary.zh}</Text>
               </View>
             )}
 

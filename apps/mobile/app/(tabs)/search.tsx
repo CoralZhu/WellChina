@@ -35,10 +35,13 @@ export default function SearchScreen() {
 
   const [query, setQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState((params.type as string) || 'all');
+  const cityParam = typeof params.city === 'string' ? params.city.toLowerCase() : '';
 
   const filtered = useMemo(() => {
     return INSTITUTIONS.filter((inst) => {
       const matchType = typeFilter === 'all' || inst.type === typeFilter;
+      const matchCity = !cityParam || Object.values(inst.city).some((city) => city.toLowerCase() === cityParam);
+      if (!matchCity) return false;
       if (!query.trim()) return matchType;
       const q = query.toLowerCase();
       const lang = language;
@@ -47,7 +50,7 @@ export default function SearchScreen() {
       const symptomMatch = inst.symptoms.some((s) => s.toLowerCase().includes(q));
       return matchType && (nameMatch || cityMatch || symptomMatch);
     });
-  }, [query, typeFilter, language]);
+  }, [cityParam, query, typeFilter, language]);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -106,7 +109,7 @@ export default function SearchScreen() {
 
         {/* Results */}
         <View style={styles.section}>
-          {query || typeFilter !== 'all' ? (
+          {query || typeFilter !== 'all' || cityParam ? (
             <>
               <Text style={styles.resultCount}>{t('search.resultCount', { count: filtered.length })}</Text>
               {filtered.map((item) => (

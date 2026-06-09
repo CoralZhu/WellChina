@@ -3,7 +3,8 @@ import type { BookingRequest, VisitSummary } from '../types/workflow';
 type Language = BookingRequest['preferredLanguage'];
 
 type CopySet = {
-  adviceClosing: string;
+  adviceSummaries: Record<string, string>;
+  adviceFallback: string;
   medicationNotes: string;
   recoveryNotes: Record<string, string>;
   recoveryFallback: string;
@@ -12,7 +13,14 @@ type CopySet = {
 };
 
 const EN: CopySet = {
-  adviceClosing: 'Please follow the doctor\'s instructions and contact the care team if symptoms change.',
+  adviceSummaries: {
+    orthopedics: 'Rest, focus on slow rehabilitation training, and avoid intense exercise. Please follow the doctor\'s instructions and contact the care team if symptoms change.',
+    tcm: 'Follow the clinician\'s recovery plan, keep a regular routine, and record sleep, appetite, digestion, and energy changes during treatment.',
+    cancer: 'Keep all test results organized, follow the doctor\'s review plan, and confirm which findings need monitoring or additional testing.',
+    cardiology: 'Follow the doctor\'s advice, avoid heavy activity until cleared, and monitor chest discomfort, breathlessness, pulse, and blood pressure.',
+    wellness: 'Rest well, stay hydrated, keep balanced meals, and use the visit findings to guide a realistic wellness plan.',
+  },
+  adviceFallback: 'Follow the doctor\'s advice, rest well, and contact the care team if symptoms change.',
   medicationNotes: 'Medication was mentioned in the visit notes. Confirm dosage, timing, side effects, and whether any current medicines should be stopped or continued.',
   recoveryNotes: {
     orthopedics: 'Focus on gradual mobility, safe walking, and rehabilitation exercises as advised. Avoid sudden increases in activity until cleared by the care team.',
@@ -27,7 +35,14 @@ const EN: CopySet = {
 };
 
 const ZH: CopySet = {
-  adviceClosing: '请遵循医生建议执行，如症状变化，请及时联系护理团队。',
+  adviceSummaries: {
+    orthopedics: '静养休息，专注慢训练，避免剧烈运动。请遵循医生建议执行，如症状变化，请及时联系护理团队。',
+    tcm: '请按医生制定的调理方案执行，保持规律作息，并记录睡眠、食欲、消化和精力变化。',
+    cancer: '请整理好全部检查结果，按医生复查计划执行，并确认哪些指标需要持续观察或进一步检查。',
+    cardiology: '请遵循医生建议，在医生确认前避免高强度活动，并监测胸闷胸痛、气短、脉搏和血压变化。',
+    wellness: '请注意休息、补水、均衡饮食，并根据本次检查结果制定可执行的康养计划。',
+  },
+  adviceFallback: '请遵循医生建议执行，注意休息。如症状变化，请及时联系护理团队。',
   medicationNotes: '就诊记录中提到了用药。请确认剂量、服用时间、副作用，以及现有药物是否需要停用或继续。',
   recoveryNotes: {
     orthopedics: '恢复期应循序渐进增加活动量，并按医嘱进行康复训练。在护理团队确认前，避免突然增加运动强度。',
@@ -42,7 +57,14 @@ const ZH: CopySet = {
 };
 
 const RU: CopySet = {
-  adviceClosing: 'Следуйте рекомендациям врача и свяжитесь с командой сопровождения, если симптомы изменятся.',
+  adviceSummaries: {
+    orthopedics: 'Отдыхайте, сосредоточьтесь на постепенной реабилитации и избегайте интенсивных нагрузок. Следуйте рекомендациям врача и свяжитесь с командой сопровождения, если симптомы изменятся.',
+    tcm: 'Следуйте плану восстановления, соблюдайте регулярный режим и отслеживайте сон, аппетит, пищеварение и уровень энергии.',
+    cancer: 'Храните все результаты обследований в порядке, следуйте плану повторного осмотра и уточните, какие показатели нужно наблюдать.',
+    cardiology: 'Следуйте рекомендациям врача, избегайте тяжелых нагрузок до разрешения специалиста и контролируйте дискомфорт в груди, одышку, пульс и давление.',
+    wellness: 'Отдыхайте, пейте достаточно воды, придерживайтесь сбалансированного питания и используйте результаты визита для реалистичного плана оздоровления.',
+  },
+  adviceFallback: 'Следуйте рекомендациям врача, отдыхайте и свяжитесь с командой сопровождения, если симптомы изменятся.',
   medicationNotes: 'В заметках врача упоминаются лекарства. Уточните дозировку, время приема, побочные эффекты и какие текущие препараты нужно продолжить или отменить.',
   recoveryNotes: {
     orthopedics: 'Постепенно восстанавливайте подвижность и выполняйте реабилитационные упражнения по назначению. Не увеличивайте нагрузку резко без разрешения команды.',
@@ -66,16 +88,10 @@ function getCopy(language: Language) {
   return COPY[language] || EN;
 }
 
-function truncateNotes(doctorNotes: string) {
-  const cleaned = doctorNotes.trim().replace(/\s+/g, ' ');
-  if (cleaned.length <= 200) return cleaned;
-  return `${cleaned.slice(0, 200).trim()}...`;
-}
-
 function createDoctorAdviceSummary(doctorNotes: string, booking: BookingRequest): string {
   const copy = getCopy(booking.preferredLanguage);
-  const summary = truncateNotes(doctorNotes);
-  return `${summary} ${copy.adviceClosing}`;
+  const category = inferCareCategory(booking);
+  return copy.adviceSummaries[category] || copy.adviceFallback;
 }
 
 function containsMedicationMention(doctorNotes: string) {

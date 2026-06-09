@@ -164,6 +164,15 @@ export default function AdminScreen() {
         <View style={styles.headerSpacer} />
       </View>
 
+      <TouchableOpacity
+        style={styles.dashboardLink}
+        onPress={() => router.push('/monitor')}
+        activeOpacity={0.84}
+      >
+        <Text style={styles.dashboardLinkText}>View full dashboard</Text>
+        <Ionicons name="arrow-forward" size={16} color={Colors.primary} />
+      </TouchableOpacity>
+
       {loading ? (
         <View style={styles.centerState}>
           <ActivityIndicator size="large" color={Colors.primary} />
@@ -296,6 +305,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   headerSpacer: { width: 40 },
+  dashboardLink: {
+    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+    marginHorizontal: Spacing.lg,
+    marginBottom: Spacing.md,
+    borderRadius: Radius.full,
+    backgroundColor: Colors.bgCard,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    ...Shadow.card,
+  },
+  dashboardLinkText: {
+    color: Colors.primary,
+    fontSize: FontSize.sm,
+    fontWeight: '900',
+  },
   centerState: {
     flex: 1,
     alignItems: 'center',

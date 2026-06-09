@@ -1,12 +1,21 @@
-import '../i18n';
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Colors } from '../constants/theme';
+import i18n from '../i18n';
+import { useAppStore } from '../store/appStore';
 
 export default function RootLayout() {
+  const language = useAppStore((state) => state.language);
+
+  useEffect(() => {
+    if (i18n.language !== language) {
+      void i18n.changeLanguage(language);
+    }
+  }, [language]);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
@@ -17,10 +26,11 @@ export default function RootLayout() {
           <Stack.Screen name="onboarding" />
           <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
           <Stack.Screen name="institution/[id]" options={{ headerShown: true, headerTitle: '', headerBackTitle: '', headerTintColor: Colors.primary, headerTransparent: true }} />
-          <Stack.Screen name="booking/[serviceId]" options={{ headerShown: true, headerTitle: '', headerBackTitle: '', headerTintColor: Colors.primary }} />
+          <Stack.Screen name="booking/[serviceId]" options={{ headerShown: false }} />
           <Stack.Screen name="crosssell" options={{ headerShown: true, headerTitle: '', headerBackTitle: '', headerTintColor: Colors.primary }} />
           <Stack.Screen name="chat" options={{ headerShown: true, headerTitle: 'AI Assistant', headerTintColor: Colors.primary }} />
           <Stack.Screen name="sos" options={{ presentation: 'modal', headerShown: false }} />
+          <Stack.Screen name="monitor" options={{ headerShown: false }} />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>

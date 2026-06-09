@@ -134,7 +134,62 @@
     "jciCertified": "JCI Certified",
     "yearsExperience": "yrs experience",
     "prepareWithAI": "Prepare with AI",
-    "similarInstitutions": "Similar Institutions"
+    "similarInstitutions": "Similar Institutions",
+    "rating": "Rating",
+    "reviewCount": "Reviews",
+    "doctorInfoPending": "Doctor information is being prepared. Please contact support for details.",
+    "shareSuffix": "From WellChina",
+    "quotePreparing": "The quote export is being prepared for the demo.",
+    "mockReviews": {
+      "anna": "Excellent experience. The doctors were very professional, and the interpreter helped at every step. Highly recommended.",
+      "robert": "Very professional service, transparent pricing, and no hidden fees. I would come again.",
+      "margaret": "Wonderful experience. The facilities are world-class and the staff incredibly attentive."
+    },
+    "mustReadItems": {
+      "visa": {
+        "title": "Visa Requirements",
+        "body": "Medical travel to China usually requires a medical or visitor visa. We can help obtain a hospital invitation letter; processing often takes 5-10 business days."
+      },
+      "medication": {
+        "title": "Prescription Medication",
+        "body": "You may bring up to three months of prescription medication. Carry the original prescription in English. Controlled medications may require advance declaration."
+      },
+      "payment": {
+        "title": "Payment Methods",
+        "body": "International credit cards, UnionPay, and WeChat Pay are supported. Russian users may use RUB transfer; EUR and USD are also accepted."
+      },
+      "guarantee": {
+        "title": "Platform Guarantee",
+        "body": "All bookings are protected by the WellChina platform. If the service does not match what was promised, we will arrange a refund or alternative service."
+      },
+      "refund": {
+        "title": "Refund Policy",
+        "body": "Cancel more than 14 days before departure for a full refund. 7-14 days: 80% refund. Within 7 days: 50% refund, with special cases reviewed separately."
+      }
+    },
+    "includes": {
+      "surgery": "Surgery",
+      "stay7": "7-day stay",
+      "physio": "Physiotherapy",
+      "echo": "Echocardiogram",
+      "ecg": "ECG",
+      "bloodwork": "Blood tests",
+      "acupuncture": "Acupuncture",
+      "tuina": "Tuina massage",
+      "herbal": "Herbal therapy",
+      "stay21": "21-day stay",
+      "assessment": "Assessment",
+      "mri": "MRI",
+      "ct": "CT scan",
+      "consultation": "Consultation",
+      "evaluation": "Evaluation",
+      "treatment": "Treatment",
+      "monitoring": "Monitoring",
+      "accommodation": "Accommodation",
+      "meals": "Meals",
+      "classes": "Classes",
+      "spa": "Spa"
+    }
   },
   "care": {
     "title": "AI Care Preparation",
@@ -335,6 +390,8 @@
     "vip": "VIP Member",
     "settings": "Settings",
     "language": "Language",
+    "comingSoonTitle": "Coming soon",
+    "comingSoonBody": "This area is prepared for the full product and is not part of the demo flow.",
     "logout": "Sign Out"
   },
   "sos": {

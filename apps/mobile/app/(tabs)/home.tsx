@@ -108,7 +108,13 @@ export default function HomeScreen() {
             <TouchableOpacity
               key={cat.key}
               style={[styles.categoryCard, { backgroundColor: cat.bg }]}
-              onPress={() => router.push({ pathname: '/search', params: { type: cat.key } })}
+              onPress={() => {
+                if (cat.key === 'companion') {
+                  router.push('/chat');
+                  return;
+                }
+                router.push({ pathname: '/search', params: { type: cat.key } });
+              }}
               activeOpacity={0.85}
             >
               <Ionicons name={cat.icon} size={28} color={cat.color} />
@@ -129,7 +135,7 @@ export default function HomeScreen() {
             <TouchableOpacity
               key={dest.id}
               style={styles.destCard}
-              onPress={() => router.push({ pathname: '/search', params: { city: dest.id } })}
+              onPress={() => router.push({ pathname: '/search', params: { city: dest.name.en } })}
               activeOpacity={0.9}
             >
               <Image source={{ uri: dest.image }} style={styles.destImage} resizeMode="cover" />

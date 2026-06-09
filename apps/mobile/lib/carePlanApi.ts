@@ -26,10 +26,10 @@ export async function generateCarePlan(
       }
 
       if (error) {
-        console.error('Failed to generate care plan with Claude:', error);
+        console.error('Failed to generate care plan with AI service:', error);
       }
     } catch (error) {
-      console.error('Failed to generate care plan with Claude:', error);
+      console.error('Failed to generate care plan with AI service:', error);
     }
   }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity,
+  Alert, View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -40,6 +40,7 @@ export default function ProfileScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const { language, isGuest } = useAppStore();
+  const showComingSoon = () => Alert.alert(t('profile.comingSoonTitle'), t('profile.comingSoonBody'));
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -89,10 +90,10 @@ export default function ProfileScreen() {
 
         {/* Menu Groups */}
         <View style={styles.menuGroup}>
-          <MenuItem icon="receipt-outline" label={t('profile.orders')} color={Colors.primary} onPress={() => {}} />
-          <MenuItem icon="heart-outline" label={t('profile.health')} color="#E74C3C" onPress={() => {}} />
-          <MenuItem icon="document-text-outline" label={t('profile.records')} color="#2980B9" onPress={() => {}} />
-          <MenuItem icon="star-outline" label={t('profile.reviews')} color={Colors.gold} onPress={() => {}} />
+          <MenuItem icon="receipt-outline" label={t('profile.orders')} color={Colors.primary} onPress={showComingSoon} />
+          <MenuItem icon="heart-outline" label={t('profile.health')} color="#E74C3C" onPress={showComingSoon} />
+          <MenuItem icon="document-text-outline" label={t('profile.records')} color="#2980B9" onPress={showComingSoon} />
+          <MenuItem icon="star-outline" label={t('profile.reviews')} color={Colors.gold} onPress={showComingSoon} />
         </View>
 
         <View style={styles.menuGroup}>
@@ -103,12 +104,12 @@ export default function ProfileScreen() {
             color="#27AE60"
             onPress={() => router.push('/language')}
           />
-          <MenuItem icon="settings-outline" label={t('profile.settings')} color={Colors.textSecondary} onPress={() => {}} />
+          <MenuItem icon="settings-outline" label={t('profile.settings')} color={Colors.textSecondary} onPress={() => router.push('/settings')} />
         </View>
 
         {!isGuest && (
           <View style={styles.menuGroup}>
-            <MenuItem icon="log-out-outline" label={t('profile.logout')} color={Colors.danger} onPress={() => {}} />
+            <MenuItem icon="log-out-outline" label={t('profile.logout')} color={Colors.danger} onPress={showComingSoon} />
           </View>
         )}
 

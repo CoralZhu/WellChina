@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Image, Dimensions, Share,
+  Alert, Image, Dimensions, Share,
 } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,20 @@ import { useAppStore } from '../../store/appStore';
 const { width } = Dimensions.get('window');
 
 const TABS = ['about', 'services', 'doctors', 'reviews', 'mustRead'] as const;
+
+const REVIEW_ITEMS = [
+  { author: 'Anna V.', flag: '🇷🇺', rating: 5, textKey: 'institution.mockReviews.anna', date: '2026-03' },
+  { author: 'Robert C.', flag: '🇺🇸', rating: 5, textKey: 'institution.mockReviews.robert', date: '2026-02' },
+  { author: 'Margaret W.', flag: '🇬🇧', rating: 4, textKey: 'institution.mockReviews.margaret', date: '2026-01' },
+];
+
+const MUST_READ_ITEMS = [
+  { icon: 'document-text-outline', titleKey: 'institution.mustReadItems.visa.title', bodyKey: 'institution.mustReadItems.visa.body' },
+  { icon: 'medkit-outline', titleKey: 'institution.mustReadItems.medication.title', bodyKey: 'institution.mustReadItems.medication.body' },
+  { icon: 'card-outline', titleKey: 'institution.mustReadItems.payment.title', bodyKey: 'institution.mustReadItems.payment.body' },
+  { icon: 'shield-outline', titleKey: 'institution.mustReadItems.guarantee.title', bodyKey: 'institution.mustReadItems.guarantee.body' },
+  { icon: 'refresh-outline', titleKey: 'institution.mustReadItems.refund.title', bodyKey: 'institution.mustReadItems.refund.body' },
+] as const;
 
 export default function InstitutionDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -44,7 +58,7 @@ export default function InstitutionDetail() {
   const handleShare = async () => {
     await Share.share({
       title: name,
-      message: `${name} · ${city}\n\n${description}\n\n来自 WellChina 栖康`,
+      message: `${name} · ${city}\n\n${description}\n\n${t('institution.shareSuffix')}`,
     });
   };
 
@@ -64,6 +78,7 @@ export default function InstitutionDetail() {
             >
               <Ionicons name="chevron-back" size={22} color={Colors.primary} />
             </TouchableOpacity>
+            <Text style={styles.stickyTitle} numberOfLines={1}>{name}</Text>
           </View>
 
           <View style={styles.tabBar}>
@@ -119,12 +134,12 @@ export default function InstitutionDetail() {
               <View style={styles.statsRow}>
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>{inst.rating}</Text>
-                  <Text style={styles.statLabel}>评分</Text>
+                  <Text style={styles.statLabel}>{t('institution.rating')}</Text>
                 </View>
                 <View style={styles.statDivider} />
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>{inst.reviewCount}</Text>
-                  <Text style={styles.statLabel}>评价</Text>
+                  <Text style={styles.statLabel}>{t('institution.reviewCount')}</Text>
                 </View>
                 <View style={styles.statDivider} />
                 <View style={styles.statItem}>
@@ -143,7 +158,7 @@ export default function InstitutionDetail() {
                   <Ionicons name="chatbubble-outline" size={20} color={Colors.primary} />
                   <Text style={styles.actionBtnText}>{t('institution.contactUs')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.actionBtn} onPress={() => {}}>
+                <TouchableOpacity style={styles.actionBtn} onPress={() => Alert.alert(t('institution.exportQuote'), t('institution.quotePreparing'))}>
                   <Ionicons name="document-outline" size={20} color={Colors.primary} />
                   <Text style={styles.actionBtnText}>{t('institution.exportQuote')}</Text>
                 </TouchableOpacity>
@@ -166,7 +181,7 @@ export default function InstitutionDetail() {
                       {svc.includes.map((item) => (
                         <View key={item} style={styles.includeChip}>
                           <Ionicons name="checkmark" size={11} color={Colors.success} />
-                          <Text style={styles.includeText}>{item}</Text>
+                          <Text style={styles.includeText}>{t(`institution.includes.${item}`)}</Text>
                         </View>
                       ))}
                     </View>
@@ -186,7 +201,7 @@ export default function InstitutionDetail() {
             <View>
               <Text style={styles.sectionTitle}>{t('institution.doctors')}</Text>
               {inst.doctors.length === 0 && (
-                <Text style={styles.description}>医生信息整理中，请通过客服咨询。</Text>
+                <Text style={styles.description}>{t('institution.doctorInfoPending')}</Text>
               )}
               {inst.doctors.map((doc, i) => {
                 const docName = doc.name[lang as keyof typeof doc.name] || doc.name['en'];
@@ -210,12 +225,7 @@ export default function InstitutionDetail() {
           {activeTab === 'reviews' && (
             <View>
               <Text style={styles.sectionTitle}>{t('institution.reviews')}</Text>
-              {/* Mock reviews */}
-              {[
-                { author: 'Anna V.', flag: '🇷🇺', rating: 5, text: 'Отличный опыт! Врачи очень профессиональны, переводчик помог на каждом шагу. Очень рекомендую.', date: '2026-03' },
-                { author: 'Robert C.', flag: '🇺🇸', rating: 5, text: '服务非常专业，价格透明，没有任何隐藏费用。下次还会来。', date: '2026-02' },
-                { author: 'Margaret W.', flag: '🇬🇧', rating: 4, text: 'Wonderful experience. The facilities are world-class and the staff incredibly attentive.', date: '2026-01' },
-              ].map((review, i) => (
+              {REVIEW_ITEMS.map((review, i) => (
                 <View key={i} style={styles.reviewCard}>
                   <View style={styles.reviewHeader}>
                     <Text style={styles.reviewFlag}>{review.flag}</Text>
@@ -227,7 +237,7 @@ export default function InstitutionDetail() {
                     </View>
                     <Text style={styles.reviewDate}>{review.date}</Text>
                   </View>
-                  <Text style={styles.reviewText}>{review.text}</Text>
+                  <Text style={styles.reviewText}>{t(review.textKey)}</Text>
                 </View>
               ))}
             </View>
@@ -236,20 +246,14 @@ export default function InstitutionDetail() {
           {activeTab === 'mustRead' && (
             <View>
               <Text style={styles.sectionTitle}>{t('institution.mustRead')}</Text>
-              {[
-                { icon: 'document-text-outline', title: '签证要求', body: '来华就医需申请医疗签证（M签）。我们可协助获取医院邀请函，通常5-10工作日出签。' },
-                { icon: 'medkit-outline', title: '处方药携带', body: '可携带3个月以内用量的处方药，需带英文处方原件。麻醉类/精神类药物需提前申报。' },
-                { icon: 'card-outline', title: '支付方式', body: '支持国际信用卡(Visa/Mastercard)、银联、微信支付。俄罗斯用户可使用卢布汇款，欧元/美元均可。' },
-                { icon: 'shield-outline', title: '平台担保', body: '所有预订均受WellChina平台担保。如出现服务不符，我们承诺全额退款或重新安排。' },
-                { icon: 'refresh-outline', title: '退款政策', body: '出发前14天以上取消：全额退款。7-14天：退款80%。7天内：退款50%（特殊情况另议）。' },
-              ].map((item, i) => (
+              {MUST_READ_ITEMS.map((item, i) => (
                 <View key={i} style={styles.infoCard}>
                   <View style={styles.infoIcon}>
                     <Ionicons name={item.icon as any} size={22} color={Colors.primary} />
                   </View>
                   <View style={styles.infoBody}>
-                    <Text style={styles.infoTitle}>{item.title}</Text>
-                    <Text style={styles.infoText}>{item.body}</Text>
+                    <Text style={styles.infoTitle}>{t(item.titleKey)}</Text>
+                    <Text style={styles.infoText}>{t(item.bodyKey)}</Text>
                   </View>
                 </View>
               ))}
@@ -332,6 +336,9 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   backRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
     paddingHorizontal: Spacing.md,
     paddingTop: Spacing.md,
     paddingBottom: Spacing.xs,
@@ -345,6 +352,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.bgCard,
     ...Shadow.card,
+  },
+  stickyTitle: {
+    flex: 1,
+    fontSize: FontSize.md,
+    fontWeight: '800',
+    color: Colors.textPrimary,
+    marginRight: Spacing.md,
   },
   heroImage: { width, height: 280 },
   heroOverlay: {

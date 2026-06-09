@@ -70,6 +70,8 @@ export type BookingRequest = {
   status: BookingRequestStatus;
   /** Structured AI care preparation result attached to this booking request, if generated. */
   carePreparation?: CarePreparationResult;
+  /** Original inputs used to generate care preparation, kept locally so the plan can be re-localized. */
+  carePreparationInput?: CarePreparationInput;
   /** ISO timestamp for when the booking request was created. */
   createdAt: string;
 };

@@ -134,7 +134,62 @@
     "jciCertified": "JCI 认证",
     "yearsExperience": "年经验",
     "prepareWithAI": "AI 就医准备",
-    "similarInstitutions": "相似机构"
+    "similarInstitutions": "相似机构",
+    "rating": "评分",
+    "reviewCount": "评价",
+    "doctorInfoPending": "医生信息整理中，请通过客服咨询。",
+    "shareSuffix": "来自 WellChina 栖康",
+    "quotePreparing": "报价单导出功能正在为演示准备中。",
+    "mockReviews": {
+      "anna": "体验非常好！医生很专业，翻译全程协助，非常推荐。",
+      "robert": "服务非常专业，价格透明，没有任何隐藏费用。下次还会来。",
+      "margaret": "体验很棒。设施达到国际水准，工作人员也非常细心。"
+    },
+    "mustReadItems": {
+      "visa": {
+        "title": "签证要求",
+        "body": "来华就医通常需申请医疗或访问签证。我们可协助获取医院邀请函，通常5-10个工作日出签。"
+      },
+      "medication": {
+        "title": "处方药携带",
+        "body": "可携带3个月以内用量的处方药，需带英文处方原件。麻醉类或精神类药物需提前申报。"
+      },
+      "payment": {
+        "title": "支付方式",
+        "body": "支持国际信用卡、银联和微信支付。俄罗斯用户可使用卢布汇款，欧元和美元均可。"
+      },
+      "guarantee": {
+        "title": "平台担保",
+        "body": "所有预订均受 WellChina 平台担保。如出现服务不符，我们将协助退款或重新安排。"
+      },
+      "refund": {
+        "title": "退款政策",
+        "body": "出发前14天以上取消可全额退款。7-14天退款80%。7天内退款50%，特殊情况可单独协商。"
+      }
+    },
+    "includes": {
+      "surgery": "手术",
+      "stay7": "7天住宿",
+      "physio": "康复理疗",
+      "echo": "心脏彩超",
+      "ecg": "心电图",
+      "bloodwork": "血液检查",
+      "acupuncture": "针灸",
+      "tuina": "推拿",
+      "herbal": "中药调理",
+      "stay21": "21天住宿",
+      "assessment": "评估",
+      "mri": "核磁共振",
+      "ct": "CT 检查",
+      "consultation": "医生咨询",
+      "evaluation": "评估",
+      "treatment": "治疗",
+      "monitoring": "监测",
+      "accommodation": "住宿",
+      "meals": "餐食",
+      "classes": "课程",
+      "spa": "水疗"
+    }
   },
   "care": {
     "title": "AI 就医准备",
@@ -335,6 +390,8 @@
     "vip": "VIP 会员",
     "settings": "设置",
     "language": "语言设置",
+    "comingSoonTitle": "即将上线",
+    "comingSoonBody": "该区域已预留给完整产品，不属于本次演示主流程。",
     "logout": "退出登录"
   },
   "sos": {

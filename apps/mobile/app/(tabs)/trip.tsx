@@ -14,6 +14,7 @@ import { Button } from '../../components/ui/Button';
 import { Colors, Radius, Shadow, Spacing } from '../../constants/theme';
 import { INSTITUTIONS } from '../../data/mock';
 import { useFontSize } from '../../hooks/useFontSize';
+import { generateCarePreparation } from '../../lib/carePreparationGenerator';
 import { isSupabaseEnabled, supabase } from '../../lib/supabase';
 import { useAppStore } from '../../store/appStore';
 import type { BookingRequestStatus } from '../../types/workflow';
@@ -55,12 +56,18 @@ const STATUS_STYLE: Record<BookingRequestStatus, {
   },
 };
 
+const PACKAGE_LABELS: Record<string, Record<string, string>> = {
+  basic: { zh: '基础套餐', en: 'Basic Package', ru: 'Базовый пакет' },
+  standard: { zh: '标准套餐（含陪诊）', en: 'Standard + Companion', ru: 'Стандарт + Сопровождение' },
+  premium: { zh: '全程豪华套餐', en: 'Full Premium Package', ru: 'Полный премиум' },
+};
+
 export default function TripScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const FontSize = useFontSize();
   const styles = useMemo(() => createStyles(FontSize), [FontSize]);
-  const { currentBooking, language, updateBookingStatus } = useAppStore();
+  const { currentBooking, currentCareInput, language, updateBookingStatus } = useAppStore();
   const lang = language;
   const [checkedPreparation, setCheckedPreparation] = useState<Record<number, boolean>>({});
 
@@ -98,7 +105,21 @@ export default function TripScreen() {
 
   const institution = INSTITUTIONS.find((item) => item.id === currentBooking?.institutionId);
   const service = institution?.services.find((item) => item.id === currentBooking?.serviceId);
-  const carePreparation = currentBooking?.carePreparation;
+  const selectedPackageLabel = currentBooking?.selectedPackage
+    ? PACKAGE_LABELS[currentBooking.selectedPackage]?.[lang] || currentBooking.selectedPackage
+    : t('trip.notProvided');
+  const carePreparation = useMemo(() => {
+    if (!currentBooking?.carePreparation) return undefined;
+    if (currentBooking.preferredLanguage === language) return currentBooking.carePreparation;
+
+    const sourceInput = currentBooking.carePreparationInput ?? currentCareInput;
+    if (!sourceInput) return currentBooking.carePreparation;
+
+    return generateCarePreparation({
+      ...sourceInput,
+      preferredLanguage: language,
+    });
+  }, [currentBooking, currentCareInput, language]);
 
   const togglePreparation = (index: number) => {
     setCheckedPreparation((current) => ({ ...current, [index]: !current[index] }));
@@ -203,7 +224,7 @@ export default function TripScreen() {
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>{t('trip.selectedPackage')}</Text>
-            <Text style={styles.summaryValue}>{currentBooking.selectedPackage || t('trip.notProvided')}</Text>
+            <Text style={styles.summaryValue}>{selectedPackageLabel}</Text>
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>{t('trip.travelWindow')}</Text>

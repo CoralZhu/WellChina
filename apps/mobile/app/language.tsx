@@ -12,11 +12,11 @@ const LANGUAGES = [
 
 export default function LanguageScreen() {
   const router = useRouter();
-  const { setLanguage } = useAppStore();
+  const { hasOnboarded, setLanguage } = useAppStore();
 
   const handleSelect = (code: 'zh' | 'en' | 'ru') => {
     setLanguage(code);
-    router.replace('/onboarding');
+    router.replace(hasOnboarded ? '/(tabs)/home' : '/onboarding');
   };
 
   return (
