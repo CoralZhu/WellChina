@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
   Image, Dimensions, Share,
 } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -50,7 +50,39 @@ export default function InstitutionDetail() {
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} stickyHeaderIndices={[1]}>
+      <Stack.Screen options={{ headerShown: false }} />
+
+      <ScrollView showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
+        <View style={styles.stickyHeader}>
+          <View style={styles.backRow}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => router.back()}
+              activeOpacity={0.85}
+              accessibilityRole="button"
+              accessibilityLabel={t('common.back')}
+            >
+              <Ionicons name="chevron-back" size={22} color={Colors.primary} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.tabBar}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabScroll}>
+              {TABS.map((tab) => (
+                <TouchableOpacity
+                  key={tab}
+                  style={[styles.tabItem, activeTab === tab && styles.tabItemActive]}
+                  onPress={() => setActiveTab(tab)}
+                >
+                  <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
+                    {t(`institution.${tab}`)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+
         {/* Hero Image */}
         <View>
           <Image source={{ uri: inst.image }} style={styles.heroImage} resizeMode="cover" />
@@ -58,12 +90,12 @@ export default function InstitutionDetail() {
             <View style={styles.tagRow}>
               {inst.tags.includes('level3') && (
                 <View style={styles.tag}>
-                  <Text style={styles.tagText}>{t('institution.level3Hospital')}</Text>
+                  <Text style={styles.tagText}>{t('institution.tier3')}</Text>
                 </View>
               )}
               {inst.tags.includes('jci') && (
                 <View style={[styles.tag, styles.tagGold]}>
-                  <Text style={styles.tagText}>{t('institution.jciCertified')}</Text>
+                  <Text style={styles.tagText}>{t('institution.jci')}</Text>
                 </View>
               )}
             </View>
@@ -75,23 +107,6 @@ export default function InstitutionDetail() {
               <Text style={styles.heroRating}>{inst.rating} ({inst.reviewCount})</Text>
             </View>
           </View>
-        </View>
-
-        {/* Tab Bar */}
-        <View style={styles.tabBar}>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabScroll}>
-            {TABS.map((tab) => (
-              <TouchableOpacity
-                key={tab}
-                style={[styles.tabItem, activeTab === tab && styles.tabItemActive]}
-                onPress={() => setActiveTab(tab)}
-              >
-                <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
-                  {t(`institution.${tab}`)}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
         </View>
 
         {/* Tab Content */}
@@ -310,6 +325,27 @@ export default function InstitutionDetail() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Colors.bg },
+  stickyHeader: {
+    backgroundColor: Colors.bgCard,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.border,
+    zIndex: 10,
+  },
+  backRow: {
+    paddingHorizontal: Spacing.md,
+    paddingTop: Spacing.md,
+    paddingBottom: Spacing.xs,
+    backgroundColor: Colors.bgCard,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.bgCard,
+    ...Shadow.card,
+  },
   heroImage: { width, height: 280 },
   heroOverlay: {
     position: 'absolute',
@@ -328,7 +364,7 @@ const styles = StyleSheet.create({
   heroMeta: { flexDirection: 'row', alignItems: 'center', marginTop: 6 },
   heroCity: { fontSize: FontSize.sm, color: 'rgba(255,255,255,0.9)', marginLeft: 4 },
   heroRating: { fontSize: FontSize.sm, color: Colors.goldLight, marginLeft: 4 },
-  tabBar: { backgroundColor: Colors.bgCard, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: Colors.border },
+  tabBar: { backgroundColor: Colors.bgCard },
   tabScroll: { paddingHorizontal: Spacing.md },
   tabItem: { paddingVertical: Spacing.md, paddingHorizontal: Spacing.sm, marginRight: Spacing.md, borderBottomWidth: 2, borderBottomColor: 'transparent' },
   tabItemActive: { borderBottomColor: Colors.primary },

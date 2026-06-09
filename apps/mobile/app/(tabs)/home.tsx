@@ -135,7 +135,7 @@ export default function HomeScreen() {
               <Image source={{ uri: dest.image }} style={styles.destImage} resizeMode="cover" />
               <View style={styles.destOverlay}>
                 <Text style={styles.destName}>{dest.name[lang] || dest.name['en']}</Text>
-                <Text style={styles.destCount}>{dest.count} 机构</Text>
+                <Text style={styles.destCount}>{dest.count} {t('home.institutionCount')}</Text>
               </View>
             </TouchableOpacity>
           ))}

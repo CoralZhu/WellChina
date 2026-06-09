@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { Colors, FontSize, Radius, Shadow, Spacing } from '../../constants/theme';
 import { useAppStore } from '../../store/appStore';
 
@@ -25,6 +26,7 @@ interface Props {
 
 export function InstitutionCard({ item, horizontal }: Props) {
   const router = useRouter();
+  const { t } = useTranslation();
   const { language } = useAppStore();
   const lang = language as string;
 
@@ -41,10 +43,10 @@ export function InstitutionCard({ item, horizontal }: Props) {
       <View style={styles.body}>
         <View style={styles.tagRow}>
           {item.tags.includes('level3') && (
-            <View style={styles.tag}><Text style={styles.tagText}>三甲</Text></View>
+            <View style={styles.tag}><Text style={styles.tagText}>{t('institution.tier3')}</Text></View>
           )}
           {item.tags.includes('jci') && (
-            <View style={[styles.tag, styles.tagGold]}><Text style={styles.tagText}>JCI</Text></View>
+            <View style={[styles.tag, styles.tagGold]}><Text style={styles.tagText}>{t('institution.jci')}</Text></View>
           )}
         </View>
         <Text style={styles.name} numberOfLines={2}>{name}</Text>
@@ -59,7 +61,7 @@ export function InstitutionCard({ item, horizontal }: Props) {
             <Text style={styles.reviewCount}>({item.reviewCount})</Text>
           </View>
           <Text style={styles.price}>
-            <Text style={styles.priceLabel}>From </Text>
+            <Text style={styles.priceLabel}>{t('institution.priceFrom')} </Text>
             <Text style={styles.priceValue}>${item.priceFrom.toLocaleString()}</Text>
           </Text>
         </View>

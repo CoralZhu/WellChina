@@ -73,12 +73,13 @@
     "aiSubtitle": "Задайте любой вопрос в любое время",
     "categories": "Услуги",
     "destinations": "Популярные направления",
+    "institutionCount": "учреждений",
     "hotRecommend": "Топ выбор",
     "viewMap": "Посмотреть карту",
-    "searchSymptom": "Поиск по симптому",
-    "searchInstitutions": "Find a Hospital",
-    "startAIPrep": "Prepare with AI",
-    "viewJourney": "View My Journey"
+    "searchSymptom": "Поиск по симптомам",
+    "searchInstitutions": "Найти больницу",
+    "startAIPrep": "Подготовиться с ИИ",
+    "viewJourney": "Посмотреть мою поездку"
   },
   "tabs": {
     "home": "Главная",
@@ -87,7 +88,7 @@
     "profile": "Профиль"
   },
   "search": {
-    "sectionTitle": "Поиск по симптому",
+    "sectionTitle": "Поиск по симптомам",
     "allInstitutions": "Все учреждения",
     "resultCount": "{{count}} результатов",
     "emptyTitle": "Подходящих учреждений нет",
@@ -128,6 +129,8 @@
     "exportQuote": "Экспорт котировки",
     "contactUs": "Связаться с нами",
     "level3Hospital": "Больница высшей категории",
+    "tier3": "Больница 3-го уровня",
+    "jci": "JCI",
     "jciCertified": "Сертификат JCI",
     "yearsExperience": "лет опыта",
     "prepareWithAI": "Подготовиться с ИИ",
@@ -321,13 +324,13 @@
   },
   "profile": {
     "title": "Профиль",
-    "login": "Войти / Зарегистрироваться",
+    "login": "Войти / Регистрация",
     "loginDesc": "Войдите для доступа ко всем функциям",
     "orders": "Мои заказы",
     "health": "Медицинские записи",
     "records": "История посещений",
     "reviews": "Мои отзывы",
-    "referral": "Пригласить и заработать",
+    "referral": "Пригласи и заработай",
     "referralDesc": "Пригласите друга и получите скидку $200 на следующее бронирование",
     "vip": "VIP Участник",
     "settings": "Настройки",
