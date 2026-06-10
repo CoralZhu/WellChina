@@ -59,6 +59,19 @@ type InstitutionRow = {
   bookings: BookingRow[];
 };
 
+type UserProfile = {
+  userKey: string;
+  name: string;
+  country: string;
+  total: number;
+  preferredLanguage: string;
+  firstBooking: string | null;
+  lastBooking: string | null;
+  bookings: BookingRow[];
+  servicePrefs: CountItem[];
+  destinationPrefs: CountItem[];
+};
+
 const BOOKING_STATUSES: BookingRequestStatus[] = [
   'pending_review',
   'coordinator_reviewing',
@@ -145,6 +158,47 @@ const COUNTRY_LABELS: Record<string, string> = {
   'United States': '美国',
 };
 
+const COUNTRY_FLAGS: Record<string, string> = {
+  Russia: '🇷🇺',
+  俄罗斯: '🇷🇺',
+  Germany: '🇩🇪',
+  德国: '🇩🇪',
+  France: '🇫🇷',
+  法国: '🇫🇷',
+  Canada: '🇨🇦',
+  加拿大: '🇨🇦',
+  Brazil: '🇧🇷',
+  巴西: '🇧🇷',
+  Japan: '🇯🇵',
+  日本: '🇯🇵',
+  UK: '🇬🇧',
+  英国: '🇬🇧',
+  USA: '🇺🇸',
+  美国: '🇺🇸',
+  'United Kingdom': '🇬🇧',
+  'United States': '🇺🇸',
+  'Hong Kong': '🇭🇰',
+  香港: '🇭🇰',
+  Ireland: '🇮🇪',
+  爱尔兰: '🇮🇪',
+  Italy: '🇮🇹',
+  意大利: '🇮🇹',
+  Kazakhstan: '🇰🇿',
+  哈萨克斯坦: '🇰🇿',
+  Singapore: '🇸🇬',
+  新加坡: '🇸🇬',
+  Malaysia: '🇲🇾',
+  马来西亚: '🇲🇾',
+  Switzerland: '🇨🇭',
+  瑞士: '🇨🇭',
+};
+
+const LANGUAGE_LABELS: Record<string, string> = {
+  zh: '中文 🇨🇳',
+  en: '英语 🇺🇸',
+  ru: '俄语 🇷🇺',
+};
+
 const formatPercent = (value: number) => `${Math.round(value)}%`;
 
 const formatDaysAgo = (value: string | null) => {
@@ -205,6 +259,46 @@ const translateValue = (value: string, dictionary?: Record<string, string>) => {
   return dictionary[value] || dictionary[value.toLowerCase()] || dictionary[normalizedKey] || value;
 };
 
+const formatCountry = (value?: string | null) => {
+  if (!value) return '未分类';
+  const translated = COUNTRY_LABELS[value] || value;
+  const flag = COUNTRY_FLAGS[value] || COUNTRY_FLAGS[translated];
+  return flag ? `${translated} ${flag}` : translated;
+};
+
+const formatLanguage = (value?: string | null) => {
+  if (!value) return '-';
+  return LANGUAGE_LABELS[value.toLowerCase()] || value.toUpperCase();
+};
+
+const getMostCommonValue = (bookings: BookingRow[], key: keyof BookingRow) => {
+  const counts = bookings.reduce<Record<string, number>>((acc, booking) => {
+    const value = booking[key] as string | null | undefined;
+    if (!value) return acc;
+    acc[value] = (acc[value] || 0) + 1;
+    return acc;
+  }, {});
+
+  return Object.entries(counts).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] || '-';
+};
+
+const getPreferenceItems = (
+  bookings: BookingRow[],
+  key: keyof BookingRow,
+  dictionary: Record<string, string>,
+) => {
+  const counts = bookings.reduce<Record<string, number>>((acc, booking) => {
+    const rawLabel = normalizeLabel(booking[key] as string | null | undefined);
+    const label = translateValue(rawLabel, dictionary);
+    acc[label] = (acc[label] || 0) + 1;
+    return acc;
+  }, {});
+
+  return Object.entries(counts)
+    .map(([label, count]) => ({ label, count }))
+    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+};
+
 const getCountItems = (
   bookings: BookingRow[],
   key: keyof BookingRow,
@@ -232,6 +326,8 @@ export default function MonitorScreen() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [trendCardWidth, setTrendCardWidth] = useState(0);
   const [selectedInstitution, setSelectedInstitution] = useState<InstitutionRow | null>(null);
+  const [isUserListOpen, setIsUserListOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
 
   const fetchBookings = useCallback(async () => {
     if (!isSupabaseEnabled() || !supabase) {
@@ -269,11 +365,53 @@ export default function MonitorScreen() {
     void fetchBookings();
   }, [fetchBookings]);
 
+  const userProfiles = useMemo<UserProfile[]>(() => {
+    const users = bookings.reduce<Record<string, {
+      name: string;
+      bookings: BookingRow[];
+    }>>((acc, booking) => {
+      const name = booking.contact_name?.trim();
+      if (!name) return acc;
+
+      const userKey = name.toLowerCase();
+      if (!acc[userKey]) {
+        acc[userKey] = { name, bookings: [] };
+      }
+      acc[userKey].bookings.push(booking);
+      return acc;
+    }, {});
+
+    return Object.entries(users)
+      .map(([userKey, user]) => {
+        const sortedBookings = [...user.bookings].sort((a, b) => {
+          const aTime = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const bTime = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return bTime - aTime;
+        });
+        const oldestBooking = sortedBookings[sortedBookings.length - 1];
+        const latestBooking = sortedBookings[0];
+
+        return {
+          userKey,
+          name: user.name,
+          country: getMostCommonValue(sortedBookings, 'user_country'),
+          total: sortedBookings.length,
+          preferredLanguage: getMostCommonValue(sortedBookings, 'preferred_language'),
+          firstBooking: oldestBooking?.created_at || null,
+          lastBooking: latestBooking?.created_at || null,
+          bookings: sortedBookings,
+          servicePrefs: getPreferenceItems(sortedBookings, 'preferred_service_type', SERVICE_TYPE_LABELS),
+          destinationPrefs: getPreferenceItems(sortedBookings, 'preferred_destination_city', DESTINATION_LABELS),
+        };
+      })
+      .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name));
+  }, [bookings]);
+
   const metrics = useMemo(() => {
     const totalBookings = bookings.length;
     const completedCount = bookings.filter((booking) => booking.status === 'completed').length;
     const activeInstitutions = new Set(bookings.map(getInstitutionKey).filter((value) => value !== 'unknown')).size;
-    const totalUsers = new Set(bookings.map((booking) => booking.contact_name).filter(Boolean)).size;
+    const totalUsers = userProfiles.length;
 
     return [
       {
@@ -301,7 +439,7 @@ export default function MonitorScreen() {
         tint: METRIC_TINTS[3],
       },
     ];
-  }, [bookings]);
+  }, [bookings, userProfiles.length]);
 
   const statusRows = useMemo(() => {
     const total = Math.max(bookings.length, 1);
@@ -498,15 +636,37 @@ export default function MonitorScreen() {
         ) : (
           <>
             <View style={styles.metricGrid}>
-              {metrics.map((metric) => (
-                <View key={metric.label} style={[styles.metricCard, { backgroundColor: metric.tint }]}>
-                  <View>
-                    <Text style={styles.metricValue}>{metric.value}</Text>
-                    <Text style={styles.metricLabel}>{metric.label}</Text>
+              {metrics.map((metric) => {
+                const isUserMetric = metric.label === '总用户数';
+                const cardContent = (
+                  <>
+                    <View>
+                      <Text style={styles.metricValue}>{metric.value}</Text>
+                      <Text style={styles.metricLabel}>{metric.label}</Text>
+                    </View>
+                    <Ionicons name={metric.icon} size={32} color={Colors.textSecondary} style={styles.metricIcon} />
+                    {isUserMetric ? <Text style={styles.metricHint}>点击查看详情 ›</Text> : null}
+                  </>
+                );
+
+                return isUserMetric ? (
+                  <TouchableOpacity
+                    key={metric.label}
+                    style={[styles.metricCard, styles.clickableMetricCard, { backgroundColor: metric.tint }]}
+                    onPress={() => {
+                      setSelectedUser(null);
+                      setIsUserListOpen(true);
+                    }}
+                    activeOpacity={0.82}
+                  >
+                    {cardContent}
+                  </TouchableOpacity>
+                ) : (
+                  <View key={metric.label} style={[styles.metricCard, { backgroundColor: metric.tint }]}>
+                    {cardContent}
                   </View>
-                  <Ionicons name={metric.icon} size={32} color={Colors.textSecondary} style={styles.metricIcon} />
-                </View>
-              ))}
+                );
+              })}
             </View>
 
             <View
@@ -762,6 +922,173 @@ export default function MonitorScreen() {
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
+
+      <Modal
+        visible={isUserListOpen}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setIsUserListOpen(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setIsUserListOpen(false)}
+        >
+          <TouchableOpacity
+            style={styles.userListModalCard}
+            activeOpacity={1}
+            onPress={(event) => event.stopPropagation()}
+          >
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>全部用户 ({userProfiles.length})</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setIsUserListOpen(false)}
+                activeOpacity={0.82}
+              >
+                <Ionicons name="close" size={22} color={Colors.textPrimary} />
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView style={styles.userListScroll} showsVerticalScrollIndicator={false}>
+              <View style={styles.userGrid}>
+                {userProfiles.map((user) => (
+                  <TouchableOpacity
+                    key={user.userKey}
+                    style={styles.userCard}
+                    activeOpacity={0.82}
+                    onPress={() => {
+                      setIsUserListOpen(false);
+                      setSelectedUser(user);
+                    }}
+                  >
+                    <View style={styles.userAvatar}>
+                      <Text style={styles.userAvatarText}>{user.name.charAt(0).toUpperCase()}</Text>
+                    </View>
+                    <View style={styles.userCardText}>
+                      <Text style={styles.userCardName} numberOfLines={1}>{user.name}</Text>
+                      <Text style={styles.userCardCountry} numberOfLines={1}>{formatCountry(user.country)}</Text>
+                      <Text style={styles.userCardMeta}>预约数: {user.total}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
+
+      <Modal
+        visible={Boolean(selectedUser)}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setSelectedUser(null)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setSelectedUser(null)}
+        >
+          <TouchableOpacity
+            style={styles.userDetailModalCard}
+            activeOpacity={1}
+            onPress={(event) => event.stopPropagation()}
+          >
+            <View style={styles.userDetailHeader}>
+              <TouchableOpacity
+                style={styles.backToUsersButton}
+                onPress={() => {
+                  setSelectedUser(null);
+                  setIsUserListOpen(true);
+                }}
+                activeOpacity={0.82}
+              >
+                <Ionicons name="chevron-back" size={18} color={Colors.primary} />
+                <Text style={styles.backToUsersText}>返回</Text>
+              </TouchableOpacity>
+              <Text style={styles.modalTitle} numberOfLines={1}>
+                {selectedUser?.name} 的偏好档案
+              </Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setSelectedUser(null)}
+                activeOpacity={0.82}
+              >
+                <Ionicons name="close" size={22} color={Colors.textPrimary} />
+              </TouchableOpacity>
+            </View>
+
+            {selectedUser ? (
+              <ScrollView style={styles.userDetailScroll} showsVerticalScrollIndicator={false}>
+                <View style={styles.userProfileColumns}>
+                  <View style={styles.userStatsColumn}>
+                    <View style={styles.profileStatRow}>
+                      <Text style={styles.profileStatLabel}>国家</Text>
+                      <Text style={styles.profileStatValue}>{formatCountry(selectedUser.country)}</Text>
+                    </View>
+                    <View style={styles.profileStatRow}>
+                      <Text style={styles.profileStatLabel}>总预约数</Text>
+                      <Text style={styles.profileStatValue}>{selectedUser.total}</Text>
+                    </View>
+                    <View style={styles.profileStatRow}>
+                      <Text style={styles.profileStatLabel}>偏好语言</Text>
+                      <Text style={styles.profileStatValue}>{formatLanguage(selectedUser.preferredLanguage)}</Text>
+                    </View>
+                    <View style={styles.profileStatRow}>
+                      <Text style={styles.profileStatLabel}>第一次预约</Text>
+                      <Text style={styles.profileStatValue}>{formatDate(selectedUser.firstBooking)}</Text>
+                    </View>
+                    <View style={styles.profileStatRow}>
+                      <Text style={styles.profileStatLabel}>最近预约</Text>
+                      <Text style={styles.profileStatValue}>{formatDate(selectedUser.lastBooking)}</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.userPrefsColumn}>
+                    <View style={styles.preferenceBlock}>
+                      <Text style={styles.preferenceTitle}>偏好服务类型</Text>
+                      {selectedUser.servicePrefs.map((item) => (
+                        <View key={item.label} style={styles.preferenceRow}>
+                          <Text style={styles.preferenceLabel}>{item.label}</Text>
+                          <Text style={styles.preferenceCount}>{item.count}</Text>
+                        </View>
+                      ))}
+                    </View>
+
+                    <View style={styles.preferenceBlock}>
+                      <Text style={styles.preferenceTitle}>偏好目的地</Text>
+                      {selectedUser.destinationPrefs.map((item) => (
+                        <View key={item.label} style={styles.preferenceRow}>
+                          <Text style={styles.preferenceLabel}>{item.label}</Text>
+                          <Text style={styles.preferenceCount}>{item.count}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.userBookingHistory}>
+                  <Text style={styles.preferenceTitle}>全部预约 ({selectedUser.total})</Text>
+                  {selectedUser.bookings.map((booking) => (
+                    <View key={booking.id} style={styles.userHistoryRow}>
+                      <View style={styles.userHistoryMain}>
+                        <Text style={styles.userHistoryInstitution} numberOfLines={1}>
+                          {getInstitutionName(booking)}
+                        </Text>
+                        <Text style={styles.userHistoryTravel} numberOfLines={1}>
+                          {booking.travel_window || '未填写出行时间'}
+                        </Text>
+                      </View>
+                      {renderStatusBadge(booking.status)}
+                      <Text style={styles.userHistoryDate}>{formatDaysAgo(booking.created_at)}</Text>
+                    </View>
+                  ))}
+                </View>
+              </ScrollView>
+            ) : null}
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -852,6 +1179,9 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255,255,255,0.7)',
     ...Shadow.card,
   },
+  clickableMetricCard: {
+    cursor: 'pointer',
+  },
   metricValue: {
     color: Colors.textPrimary,
     fontSize: FontSize.xxxl,
@@ -862,6 +1192,14 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     fontWeight: '900',
     marginTop: Spacing.xs,
+  },
+  metricHint: {
+    position: 'absolute',
+    left: Spacing.lg,
+    bottom: Spacing.sm,
+    color: Colors.textMuted,
+    fontSize: FontSize.xs,
+    fontWeight: '800',
   },
   metricIcon: { opacity: 0.45 },
   trendPanel: {
@@ -1238,6 +1576,211 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     fontSize: FontSize.xs,
     fontWeight: '900',
+    textAlign: 'right',
+  },
+  userListModalCard: {
+    width: '100%',
+    maxWidth: 900,
+    maxHeight: '82%',
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgCard,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    padding: Spacing.lg,
+    ...Shadow.strong,
+  },
+  userListScroll: {
+    marginTop: Spacing.md,
+  },
+  userGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.md,
+  },
+  userCard: {
+    width: '31.8%',
+    minWidth: 240,
+    minHeight: 112,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    backgroundColor: Colors.bg,
+    padding: Spacing.md,
+    cursor: 'pointer',
+  },
+  userAvatar: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary,
+  },
+  userAvatarText: {
+    color: Colors.white,
+    fontSize: FontSize.lg,
+    fontWeight: '900',
+  },
+  userCardText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  userCardName: {
+    color: Colors.textPrimary,
+    fontSize: FontSize.md,
+    fontWeight: '900',
+  },
+  userCardCountry: {
+    color: Colors.textSecondary,
+    fontSize: FontSize.xs,
+    fontWeight: '800',
+    marginTop: 4,
+  },
+  userCardMeta: {
+    color: Colors.primary,
+    fontSize: FontSize.xs,
+    fontWeight: '900',
+    marginTop: 6,
+  },
+  userDetailModalCard: {
+    width: '100%',
+    maxWidth: 800,
+    maxHeight: '84%',
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgCard,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    padding: Spacing.lg,
+    ...Shadow.strong,
+  },
+  userDetailHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    paddingBottom: Spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+  },
+  backToUsersButton: {
+    height: 36,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+    borderRadius: Radius.full,
+    backgroundColor: Colors.bg,
+    paddingHorizontal: Spacing.sm,
+  },
+  backToUsersText: {
+    color: Colors.primary,
+    fontSize: FontSize.sm,
+    fontWeight: '900',
+  },
+  userDetailScroll: {
+    marginTop: Spacing.md,
+  },
+  userProfileColumns: {
+    flexDirection: 'row',
+    gap: Spacing.lg,
+    alignItems: 'flex-start',
+  },
+  userStatsColumn: {
+    flex: 4,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bg,
+    padding: Spacing.md,
+  },
+  userPrefsColumn: {
+    flex: 6,
+    gap: Spacing.md,
+  },
+  profileStatRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.border,
+  },
+  profileStatLabel: {
+    color: Colors.textMuted,
+    fontSize: FontSize.xs,
+    fontWeight: '900',
+  },
+  profileStatValue: {
+    flex: 1,
+    color: Colors.textPrimary,
+    fontSize: FontSize.sm,
+    fontWeight: '900',
+    textAlign: 'right',
+  },
+  preferenceBlock: {
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    padding: Spacing.md,
+  },
+  preferenceTitle: {
+    color: Colors.textPrimary,
+    fontSize: FontSize.md,
+    fontWeight: '900',
+    marginBottom: Spacing.sm,
+  },
+  preferenceRow: {
+    minHeight: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: Spacing.md,
+  },
+  preferenceLabel: {
+    color: Colors.textSecondary,
+    fontSize: FontSize.sm,
+    fontWeight: '800',
+  },
+  preferenceCount: {
+    color: Colors.primary,
+    fontSize: FontSize.sm,
+    fontWeight: '900',
+  },
+  userBookingHistory: {
+    marginTop: Spacing.lg,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    padding: Spacing.md,
+  },
+  userHistoryRow: {
+    minHeight: 58,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.border,
+  },
+  userHistoryMain: {
+    flex: 1,
+    minWidth: 0,
+  },
+  userHistoryInstitution: {
+    color: Colors.textPrimary,
+    fontSize: FontSize.sm,
+    fontWeight: '900',
+  },
+  userHistoryTravel: {
+    color: Colors.textSecondary,
+    fontSize: FontSize.xs,
+    fontWeight: '700',
+    marginTop: 3,
+  },
+  userHistoryDate: {
+    width: 76,
+    color: Colors.textSecondary,
+    fontSize: FontSize.xs,
+    fontWeight: '800',
     textAlign: 'right',
   },
 });
