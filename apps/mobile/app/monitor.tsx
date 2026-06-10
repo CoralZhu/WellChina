@@ -103,6 +103,8 @@ const STATUS_STYLE: Record<BookingRequestStatus, StatusConfig> = {
 
 const METRIC_TINTS = ['#FDECEC', '#EAF3FF', '#EAF7EF', '#FFF6DD'];
 const CHART_HEIGHT = 240;
+const HEATMAP_DAYS = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+const HEATMAP_HOURS = Array.from({ length: 24 }, (_, hour) => hour);
 
 const INSTITUTION_NAME_BY_ID = INSTITUTIONS.reduce<Record<string, string>>((acc, institution) => {
   acc[institution.id] = institution.name.zh;
@@ -179,6 +181,13 @@ const getDateKey = (date: Date) => {
 };
 
 const formatTrendLabel = (date: Date) => `${date.getMonth() + 1}/${date.getDate()}`;
+
+const getHeatmapCellColor = (count: number) => {
+  if (count === 0) return '#F5F5F5';
+  if (count === 1) return '#FBD9D7';
+  if (count === 2) return '#F5A8A4';
+  return '#C95450';
+};
 
 const getInstitutionKey = (booking: BookingRow) => {
   if (booking.mock_institution_id) return String(booking.mock_institution_id);
@@ -411,6 +420,22 @@ export default function MonitorScreen() {
     ...destinationRows.map((item) => item.count),
   );
 
+  const bookingTimeHeatmap = useMemo(() => {
+    const matrix = Array.from({ length: 7 }, () => Array.from({ length: 24 }, () => 0));
+
+    bookings.forEach((booking) => {
+      if (!booking.created_at) return;
+      const createdAt = new Date(booking.created_at);
+      if (Number.isNaN(createdAt.getTime())) return;
+
+      const dayIndex = (createdAt.getDay() + 6) % 7;
+      const hour = createdAt.getHours();
+      matrix[dayIndex][hour] += 1;
+    });
+
+    return matrix;
+  }, [bookings]);
+
   const renderStatusBadge = (statusValue: string | null) => {
     const status = BOOKING_STATUSES.includes(statusValue as BookingRequestStatus)
       ? statusValue as BookingRequestStatus
@@ -631,6 +656,55 @@ export default function MonitorScreen() {
               {renderInsightChart('热门服务类型', serviceRows)}
               {renderInsightChart('热门目的地', destinationRows)}
             </View>
+
+            <View style={styles.heatmapPanel}>
+              <View style={styles.panelHeading}>
+                <View>
+                  <Text style={styles.panelTitle}>预约时段热力图</Text>
+                  <Text style={styles.panelSubtitle}>按星期 × 小时分布</Text>
+                </View>
+              </View>
+
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View style={styles.heatmapContent}>
+                  <View style={styles.heatmapHeaderRow}>
+                    <View style={styles.heatmapDayLabelSpacer} />
+                    {HEATMAP_HOURS.map((hour) => (
+                      <Text key={hour} style={styles.heatmapHourLabel}>
+                        {hour % 3 === 0 ? hour : ''}
+                      </Text>
+                    ))}
+                  </View>
+
+                  {bookingTimeHeatmap.map((dayCounts, dayIndex) => (
+                    <View key={HEATMAP_DAYS[dayIndex]} style={styles.heatmapRow}>
+                      <Text style={styles.heatmapDayLabel}>{HEATMAP_DAYS[dayIndex]}</Text>
+                      {dayCounts.map((count, hour) => (
+                        <View
+                          key={`${HEATMAP_DAYS[dayIndex]}-${hour}`}
+                          style={[
+                            styles.heatmapCell,
+                            { backgroundColor: getHeatmapCellColor(count) },
+                          ]}
+                        >
+                          {count > 0 ? <Text style={styles.heatmapCellText}>{count}</Text> : null}
+                        </View>
+                      ))}
+                    </View>
+                  ))}
+                </View>
+              </ScrollView>
+
+              <View style={styles.heatmapLegend}>
+                {[0, 1, 2, 3].map((count) => (
+                  <View key={count} style={styles.heatmapLegendItem}>
+                    <View style={[styles.heatmapLegendSwatch, { backgroundColor: getHeatmapCellColor(count) }]} />
+                    <Text style={styles.heatmapLegendText}>{count === 3 ? '3+' : count}</Text>
+                  </View>
+                ))}
+                <Text style={styles.heatmapLegendText}>预约</Text>
+              </View>
+            </View>
           </>
         )}
       </ScrollView>
@@ -837,6 +911,15 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     ...Shadow.card,
   },
+  heatmapPanel: {
+    backgroundColor: Colors.bgCard,
+    borderRadius: Radius.md,
+    padding: Spacing.lg,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    marginTop: Spacing.md,
+    ...Shadow.card,
+  },
   statusPanel: { flex: 6 },
   recentPanel: { flex: 4 },
   panelTitle: {
@@ -1004,6 +1087,72 @@ const styles = StyleSheet.create({
     fontSize: FontSize.sm,
     fontWeight: '800',
     paddingVertical: Spacing.sm,
+  },
+  heatmapContent: {
+    alignSelf: 'flex-start',
+  },
+  heatmapHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: Spacing.xs,
+  },
+  heatmapDayLabelSpacer: {
+    width: 42,
+    marginRight: Spacing.sm,
+  },
+  heatmapHourLabel: {
+    width: 24,
+    marginRight: 2,
+    color: Colors.textMuted,
+    fontSize: FontSize.xs,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  heatmapRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 2,
+  },
+  heatmapDayLabel: {
+    width: 42,
+    marginRight: Spacing.sm,
+    color: Colors.textSecondary,
+    fontSize: FontSize.xs,
+    fontWeight: '900',
+  },
+  heatmapCell: {
+    width: 24,
+    height: 24,
+    marginRight: 2,
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  heatmapCellText: {
+    color: Colors.textPrimary,
+    fontSize: 10,
+    fontWeight: '900',
+  },
+  heatmapLegend: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+    marginTop: Spacing.md,
+  },
+  heatmapLegendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.xs,
+  },
+  heatmapLegendSwatch: {
+    width: 14,
+    height: 14,
+    borderRadius: 4,
+  },
+  heatmapLegendText: {
+    color: Colors.textSecondary,
+    fontSize: FontSize.xs,
+    fontWeight: '800',
   },
   modalOverlay: {
     flex: 1,
