@@ -31,6 +31,7 @@ export default function RootLayout() {
           <Stack.Screen name="chat" options={{ headerShown: true, headerTitle: 'AI Assistant', headerTintColor: Colors.primary }} />
           <Stack.Screen name="sos" options={{ presentation: 'modal', headerShown: false }} />
           <Stack.Screen name="monitor" options={{ headerShown: false }} />
+          <Stack.Screen name="agent-test" options={{ headerShown: false }} />
         </Stack>
       </SafeAreaProvider>
     </GestureHandlerRootView>
