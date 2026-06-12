@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import Markdown from 'react-native-markdown-display';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, FontSize, Radius, Shadow, Spacing } from '../constants/theme';
 import { isSupabaseEnabled, supabase } from '../lib/supabase';
@@ -373,7 +374,7 @@ export default function AdminScreen() {
 
                   <View style={styles.aiMessageBubble}>
                     {turn.reply ? (
-                      <Text style={styles.aiMessageText}>{turn.reply}</Text>
+                      <Markdown rules={markdownRules} style={markdownStyles}>{turn.reply}</Markdown>
                     ) : turn.error ? (
                       <Text style={styles.agentErrorText}>{turn.error}</Text>
                     ) : (
@@ -914,3 +915,45 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
 });
+
+const markdownStyles = StyleSheet.create({
+  body: {
+    color: Colors.textPrimary,
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  table: {
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: 8,
+  },
+  th: {
+    backgroundColor: '#F8F8F8',
+    fontWeight: '600',
+    padding: 8,
+  },
+  tr: {
+    borderColor: Colors.border,
+  },
+  td: {
+    padding: 8,
+    borderTopWidth: 1,
+    borderColor: Colors.border,
+  },
+  tableHeaderText: {
+    color: Colors.textPrimary,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  strong: {
+    fontWeight: '700',
+  },
+});
+
+const markdownRules = {
+  th: (node: { key: string }, children: React.ReactNode[], _parent: unknown, styles: any) => (
+    <View key={node.key} style={styles._VIEW_SAFE_th}>
+      <Text style={styles.tableHeaderText}>{children}</Text>
+    </View>
+  ),
+};
